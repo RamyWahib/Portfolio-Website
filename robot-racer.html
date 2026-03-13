@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Robot Racer — Ramy Wahib</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" type="image/png" href="media/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #080808; --surface: #0f0f0f; --card: #121212; --border: #1e1e1e; --orange: #06b6d4; --orange-dim: rgba(6,182,212,0.12); --orange-glow: rgba(6,182,212,0.06); --text: #f2ede8; --muted: #5a5650; --sub: #9a9490; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-weight: 400; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--orange); }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; height: 60px; background: rgba(8,8,8,0.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); }
+    .logo { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text); }
+    .logo span { color: var(--orange); }
+    .nav-back { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--orange); }
+    .hero { padding: 120px 4rem 5rem; border-bottom: 1px solid var(--border); }
+    .breadcrumb { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+    .breadcrumb a { color: var(--orange); text-decoration: none; }
+    .proj-num { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--orange); letter-spacing: 0.15em; margin-bottom: 1rem; }
+    h1 { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: clamp(3rem, 8vw, 7rem); text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em; margin-bottom: 2.5rem; }
+    .hero-meta { display: flex; gap: 3rem; flex-wrap: wrap; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .meta-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .meta-val { font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; color: var(--text); font-weight: 500; }
+    .content { max-width: 860px; padding: 5rem 4rem; }
+    .section { margin-bottom: 4rem; }
+    .section-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h2 { font-family: 'Oxanium', sans-serif; font-weight: 700; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+    p { font-size: 1rem; color: var(--sub); line-height: 1.8; margin-bottom: 1rem; }
+    .placeholder { border: 1px dashed var(--border); background: var(--surface); padding: 3rem 2rem; text-align: center; margin-bottom: 1rem; border-radius: 2px; }
+    .placeholder p { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
+    .image-placeholder { width: 100%; aspect-ratio: 16/9; border: 1px dashed var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+    .image-placeholder p { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.06em; padding: 0.35rem 0.75rem; border: 1px solid rgba(6,182,212,0.25); color: var(--orange); background: var(--orange-dim); text-transform: uppercase; }
+    .links-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+    .link-btn { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.7rem 1.4rem; text-decoration: none; transition: opacity 0.2s; }
+    .link-btn.primary { background: var(--orange); color: #080808; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); }
+    .link-btn.outline { border: 1px solid var(--border); color: var(--sub); }
+    .link-btn:hover { opacity: 0.75; }
+    .nav-projects { border-top: 1px solid var(--border); padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    .np-link { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .np-link:hover { color: var(--orange); }
+    .np-label { font-size: 0.55rem; color: var(--muted); margin-bottom: 0.3rem; display: block; letter-spacing: 0.12em; }
+    .np-title { color: var(--text); }
+    footer { padding: 1.2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+    footer span { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    @media (max-width: 720px) { nav { padding: 0 1.5rem; } .hero, .content, .nav-projects, footer { padding-left: 1.5rem; padding-right: 1.5rem; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="index.html">RAMY <span>W.</span></a>
+    <a class="nav-back" href="index.html">← Back</a>
+  </nav>
+
+  <div class="hero">
+    <div class="breadcrumb"><a href="index.html">Portfolio</a> &nbsp;/&nbsp; Projects &nbsp;/&nbsp; Robot Racer</div>
+    <div class="proj-num">// 001</div>
+    <h1>Robot<br>Racer</h1>
+    <div class="hero-meta">
+      <div><div class="meta-label">Date</div><div class="meta-val">January 2026</div></div>
+      <div><div class="meta-label">Type</div><div class="meta-val">Autonomous Navigation</div></div>
+      <div><div class="meta-label">Stack</div><div class="meta-val">C++ · ROS2 · Docker · LiDAR</div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-label">Overview</div>
+      <p>Developed autonomous navigation logic for a LiDAR-equipped robot capable of navigating to any user-specified coordinate. The system was deployed and managed using ROS2 and Docker, and simulated using Foxglove for visual debugging.</p>
+      <p>The core navigation stack implements A* Pathfinding for global path planning and Pure Pursuit Controls for local trajectory following — all written in C++.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Media</div>
+      <div class="gallery-item wide" style="max-height:400px;">
+  <video controls style="max-height:400px;width:100%;">
+    <source src="media/ROBOT-RACER.mp4" type="video/mp4">
+  </video>
+</div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Technical Details</div>
+      <h2 style="font-family:'Oxanium',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Navigation Stack</h2>
+  <p>The core navigation stack implements A* Pathfinding for global path planning and Pure Pursuit Controls for local trajectory following — all written in C++. Uses tf2 for geometric calculations for navigation.</p>
+
+  <h2 style="font-family:'Oxanium',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Perception Stack</h2>
+  <p>Scans input packets from LiDAR sensor and creates a costmap based on input. Real-time updates of costmap occur, managed with ROS2, to create a full updates occupancy grid which is used in navigation.</p>
+
+  <h2 style="font-family:'Oxanium',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin:1.5rem 0 0.6rem;">ROS2 Architecture</h2>
+  <p>Nodes were structured as a pub/sub system with separate packages for perception, planning, and control. Docker was used to containerise the full stack for reproducible deployment.</p>
+
+  <h2 style="font-family:'Oxanium',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin:1.5rem 0 0.6rem;">Simulation</h2>
+  <p>The system was validated in Foxglove, as seen in the video, allowing visual debugging of LiDAR point clouds and planned paths in real time.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Challenges & Learnings</div>
+      <div style="border-left:2px solid var(--orange);padding-left:1.2rem;">
+      <div style="font-family:'Oxanium',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;">Pure Pursuit Tuning</div>
+      <p style="margin:0;">Getting the lookahead distance right took far longer than expected — too short and the robot oscillated, too long and it cut corners. Learned to treat control parameters as experiments, not guesses.</p>
+    </div>
+
+    <div style="border-left:2px solid var(--orange);padding-left:1.2rem;">
+     <div style="font-family:'Oxanium',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;">Docker Networking</div>
+      <p style= "margin:0;">ROS2 node discovery across containers required careful configuration of DDS settings. First real exposure to containerised robotics workflows.</p>
+    </div>
+
+    <div style="border-left:2px solid var(--orange);padding-left:1.2rem;">
+      <div style="font-family:'Oxanium',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;">Perception Math</div>
+      <p style="margin:0;">Never worked on LiDAR perception before. Went through numerous guides on how to do it, yet the task was very difficult.</p>
+    </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Tech Stack</div>
+      <div class="tags">
+        <span class="tag">C++</span><span class="tag">ROS2</span><span class="tag">Docker</span><span class="tag">LiDAR</span><span class="tag">A* Pathfinding</span><span class="tag">Pure Pursuit</span><span class="tag">Foxglove</span>
+      </div>
+    </div>
+
+    <div class="links-row">
+      <a class="link-btn primary" href="https://github.com/RamyWahib/WatO-onboarding" target="_blank">View on GitHub ↗</a>
+      <a class="link-btn outline" href="index.html">← Back to Portfolio</a>
+    </div>
+  </div>
+
+  <div class="nav-projects">
+    <div></div>
+    <a class="np-link" href="tkom-robot.html">
+      <span class="np-label">Next Project</span>
+      <span class="np-title">TKOM Robot →</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>© 2026 Ramy Wahib</span>
+    <span>Mechatronics Engineering</span>
+  </footer>
+</body>
+</html>

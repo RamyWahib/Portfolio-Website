@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WATonomous — Ramy Wahib</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #080808; --surface: #0f0f0f; --card: #121212; --border: #1e1e1e; --orange: #06b6d4; --orange-dim: rgba(6,182,212,0.12); --orange-glow: rgba(6,182,212,0.06); --text: #f2ede8; --muted: #5a5650; --sub: #9a9490; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-weight: 400; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--orange); }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; height: 60px; background: rgba(8,8,8,0.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); }
+    .logo { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text); }
+    .logo span { color: var(--orange); }
+    .nav-back { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--orange); }
+
+    /* HERO */
+    .hero { padding: 140px 4rem 6rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-bg-text { position: absolute; top: 50%; right: -2rem; transform: translateY(-50%); font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: clamp(6rem, 18vw, 18rem); text-transform: uppercase; color: #0f0f0f; pointer-events: none; user-select: none; line-height: 1; }
+    .hero-eyebrow { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
+    h1 { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: clamp(3.5rem, 10vw, 9rem); text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em; margin-bottom: 2.5rem; position: relative; }
+    h1 span { color: var(--orange); }
+    .hero-meta { display: flex; gap: 3rem; flex-wrap: wrap; padding-top: 2rem; border-top: 1px solid var(--border); position: relative; }
+    .meta-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .meta-val { font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; color: var(--text); font-weight: 500; }
+    .meta-val a { color: var(--orange); text-decoration: none; }
+    .meta-val a:hover { text-decoration: underline; }
+
+    /* SECTIONS */
+    .section { padding: 5rem 4rem; border-bottom: 1px solid var(--border); }
+    .section-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    p { font-size: 1rem; color: var(--sub); line-height: 1.8; margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ROLE GRID */
+    .role-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: start; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 2rem; }
+    .stat-cell { background: var(--card); padding: 1.5rem; }
+    .stat-num { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: 2rem; color: var(--orange); line-height: 1; display: block; margin-bottom: 0.3rem; }
+    .stat-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+    .role-block { border: 1px solid var(--border); background: var(--card); }
+    .role-header { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .role-title { font-family: 'Oxanium', sans-serif; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .role-badge { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); border: 1px solid rgba(6,182,212,0.3); padding: 0.25rem 0.7rem; background: var(--orange-dim); }
+    .role-body { padding: 2rem; }
+    .responsibilities { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+    .responsibilities li { font-size: 0.95rem; color: var(--sub); line-height: 1.6; display: flex; gap: 0.8rem; align-items: flex-start; }
+    .responsibilities li::before { content: '→'; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--orange); margin-top: 0.15rem; flex-shrink: 0; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.5rem; }
+    .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.06em; padding: 0.2rem 0.5rem; border: 1px solid rgba(6,182,212,0.25); color: var(--orange); background: var(--orange-dim); text-transform: uppercase; }
+
+    /* GALLERY */
+    .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .gallery-item { position: relative; overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
+    .gallery-item.wide { grid-column: span 2; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 16/9; transition: transform 0.3s ease; cursor: zoom-in; }
+    .gallery-item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-add { aspect-ratio: 16/9; border: 1px dashed var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; }
+    .gallery-add p { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; text-align: center; padding: 0 2rem; margin: 0; }
+
+    /* WRITEUPS */
+    .writeup-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .writeup-card { background: var(--card); padding: 2rem; display: flex; flex-direction: column; gap: 0.8rem; transition: background 0.2s; }
+    .writeup-card:hover { background: #161616; }
+    .writeup-num { font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+    .writeup-title { font-family: 'Oxanium', sans-serif; font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .writeup-body { font-size: 0.88rem; color: var(--sub); line-height: 1.65; flex: 1; }
+    .writeup-placeholder { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: #2a2a2a; letter-spacing: 0.1em; text-transform: uppercase; padding: 2.5rem; text-align: center; border: 1px dashed var(--border); background: var(--surface); }
+
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; padding: 2rem; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; border: 1px solid var(--border); }
+    .lightbox-close { position: absolute; top: 1.5rem; right: 2rem; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--muted); cursor: pointer; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; background: none; border: none; }
+    .lightbox-close:hover { color: var(--orange); }
+
+    footer { padding: 1.2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    footer span { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .reveal { opacity: 1; transform: none; transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.pre-anim { opacity: 0; transform: translateY(22px); }
+    .reveal.on { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; }
+      .hero, .section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .role-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .gallery { grid-template-columns: 1fr; }
+      .gallery-item.wide { grid-column: span 1; }
+      .writeup-grid { grid-template-columns: 1fr; }
+      .hero-bg-text { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html">RAMY <span>W.</span></a>
+    <a class="nav-back" href="index.html">← Back to Portfolio</a>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-bg-text">WAT</div>
+    <div class="hero-eyebrow">Active Role — Jan 2026 – Present</div>
+    <h1>WAT<span>onomous</span></h1>
+    <div class="hero-meta">
+      <div><div class="meta-label">Team</div><div class="meta-val"><a href="https://watonomous.ca" target="_blank">watonomous.ca ↗</a></div></div>
+      <div><div class="meta-label">My Role</div><div class="meta-val">Robotics Engineer</div></div>
+      <div><div class="meta-label">Subteam</div><div class="meta-val">Autonomy Software</div></div>
+      <div><div class="meta-label">Stack</div><div class="meta-val">C++ · ROS2 · STM32 · CAN Bus</div></div>
+    </div>
+  </div>
+
+  <!-- ROLE -->
+  <div class="section">
+    <div class="section-label">// 01 — My Role</div>
+    <div class="role-grid">
+      <div class="reveal">
+        <p>WATonomous is the University of Waterloo's student autonomous robots design team. I joined in January 2026 as a Robotics Engineer, focusing mainly on software while also doing Hardware tasks for a 15+ DOF Humanoid Robotic Arm.</p>
+        <div class="stat-grid">
+          <div class="stat-cell"><span class="stat-num">15+ DOF</span><span class="stat-label">Robotic Arm</span></div>
+          <div class="stat-cell"><span class="stat-num">CAN</span><span class="stat-label">Bus Protocol</span></div>
+          <div class="stat-cell"><span class="stat-num">STM32</span><span class="stat-label">MCU Platform</span></div>
+          <div class="stat-cell"><span class="stat-num">ROS2</span><span class="stat-label">Middleware</span></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="role-block">
+          <div class="role-header">
+            <div class="role-title">Robotics Engineer</div>
+            <div class="role-badge">● Active</div>
+          </div>
+          <div class="role-body">
+            <ul class="responsibilities">
+              <li>Developing CAN bus firmware for STM32 microcontrollers to interface with robotic arm joints</li>
+              <li>Building joint state representation and feedback systems in ROS2 C++</li>
+              <li>Writing and testing motion control nodes for autonomous arm operation</li>
+              <li>Collaborating with hardware and electrical subteams on system integration</li>
+              <li>Designing, building, and testing power system for the robotic arm</li>
+            </ul>
+            <div class="tags">
+              <span class="tag">C++</span><span class="tag">ROS2</span><span class="tag">STM32</span><span class="tag">CAN Bus</span><span class="tag">Embedded</span><span class="tag">Linux</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="section">
+    <div class="section-label">// 02 — Gallery</div>
+    <div class="gallery reveal">
+
+      <!-- ============================================================
+           HOW TO ADD IMAGES:
+           <div class="gallery-item">
+             <img src="your-image.jpg" alt="Description">
+           </div>
+
+           WIDE (full width):
+           <div class="gallery-item wide">
+             <img src="your-image.jpg" alt="Description">
+           </div>
+
+           VIDEO FILE:
+           <div class="gallery-item wide">
+             <video controls><source src="your-video.mp4" type="video/mp4"></video>
+           </div>
+
+           YOUTUBE:
+           <div class="gallery-item wide">
+             <iframe width="100%" style="aspect-ratio:16/9;border:none;"
+               src="https://www.youtube.com/embed/YOUR_ID" allowfullscreen></iframe>
+           </div>
+      ============================================================ -->
+
+      <div class="gallery-add"><p>Coming Soon! Project is still in early development so no prototypes have been made yet.</p></div>
+      <div class="gallery-add"><p>Coming Soon! Project is still in early development so no prototypes have been made yet.</p></div>
+
+    </div>
+  </div>
+
+  <!-- TECHNICAL WRITEUPS -->
+  <div class="section">
+    <div class="section-label">// 03 — Work Breakdown - CURRENT TASKS</div>
+    <div class="writeup-grid reveal">
+
+      <!-- ============================================================
+           HOW TO ADD A WRITEUP CARD:
+           <div class="writeup-card">
+             <div class="writeup-num">Task 03</div>
+             <div class="writeup-title">Your Task</div>
+             <p class="writeup-body">What you built and why it matters.</p>
+             <div class="tags"><span class="tag">ROS2</span></div>
+           </div>
+      ============================================================ -->
+
+      <div class="writeup-card">
+        <div class="writeup-num">Task 01</div>
+        <div class="writeup-title">CAN Bus Firmware</div>
+        <p class="writeup-body">Developing STM32 firmware to send and receive CAN frames for communicating joint commands and state feedback between the arm's MCUs and the ROS2 control stack.</p>
+        <div class="tags"><span class="tag">STM32</span><span class="tag">CAN Bus</span><span class="tag">C</span><span class="tag">Embedded</span></div>
+      </div>
+
+      <div class="writeup-card">
+        <div class="writeup-num">Task 02</div>
+        <div class="writeup-title">Reinforcement Learning</div>
+        <p class="writeup-body">Right now, I am getting into reinforcement learning based inverse kinematics for our robotic arm using Geometric Fabrics.</p>
+        <div class="tags"><span class="tag">ROS2</span><span class="tag">C++</span><span class="tag">Kinematics</span></div>
+      </div>
+
+      
+
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <footer>
+    <span>© 2026 Ramy Wahib</span>
+    <span>WATonomous — Autonomy Software</span>
+  </footer>
+
+  <script>
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.getElementById('lightbox-img').src = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.src); });
+    });
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('on'), i * 70);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.add('pre-anim');
+      obs.observe(el);
+    });
+  </script>
+
+</body>
+</html>

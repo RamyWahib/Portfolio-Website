@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Hand — Ramy Wahib</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" type="image/png" href="media/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080808; --surface: #0f0f0f; --card: #121212;
+      --border: #1e1e1e; --orange: #06b6d4;
+      --orange-dim: rgba(6,182,212,0.12); --orange-glow: rgba(6,182,212,0.06);
+      --text: #f2ede8; --muted: #5a5650; --sub: #9a9490;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-weight: 400; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--orange); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4rem; height: 60px;
+      background: rgba(8,8,8,0.95); border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+    .logo { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text); }
+    .logo span { color: var(--orange); }
+    .nav-back { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--orange); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 140px 4rem 6rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-text {
+      position: absolute; top: 50%; right: -1rem;
+      transform: translateY(-50%);
+      font-family: 'Oxanium', sans-serif; font-weight: 800;
+      font-size: clamp(6rem, 20vw, 20rem);
+      text-transform: uppercase; color: #0d0d0d;
+      pointer-events: none; user-select: none; line-height: 1;
+    }
+    .hero-eyebrow {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange);
+      margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem;
+    }
+    .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
+    h1 {
+      font-family: 'Oxanium', sans-serif; font-weight: 800;
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      text-transform: uppercase; line-height: 0.9;
+      letter-spacing: -0.01em; margin-bottom: 2.5rem; position: relative;
+    }
+    h1 span { color: var(--orange); }
+    .hero-meta {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      padding-top: 2rem; border-top: 1px solid var(--border); position: relative;
+    }
+    .meta-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .meta-val { font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; color: var(--text); font-weight: 500; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 5rem 4rem; border-bottom: 1px solid var(--border); }
+    .section-label {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange);
+      margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    h2 {
+      font-family: 'Oxanium', sans-serif; font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem); text-transform: uppercase;
+      letter-spacing: 0.04em; margin-bottom: 1.2rem;
+    }
+    p { font-size: 1rem; color: var(--sub); line-height: 1.8; margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── WHAT IT IS ── */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .what-visual {
+      border: 1px solid var(--border);
+      background: var(--card);
+      aspect-ratio: 4/3;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem; position: relative; overflow: hidden;
+    }
+    .what-visual-bg {
+      font-family: 'Oxanium', sans-serif; font-weight: 800;
+      font-size: 7rem; color: #141414; text-transform: uppercase;
+      position: absolute; user-select: none;
+    }
+    .what-visual-label {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+      position: relative;
+    }
+    /* TO ADD IMAGE: replace .what-visual div content with <img src="..." style="width:100%;height:100%;object-fit:cover;"> */
+
+    /* ── OBJECTIVES CHECKLIST ── */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .check-item:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 18px; height: 18px; flex-shrink: 0;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .check-item.done .check-box {
+      border-color: var(--orange);
+      background: var(--orange-dim);
+    }
+    .check-box-tick {
+      font-size: 0.65rem; color: var(--orange); opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .check-item.done .check-box-tick { opacity: 1; }
+
+    .check-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.95rem; font-weight: 500; color: var(--text);
+      flex: 1; transition: color 0.2s;
+    }
+    .check-item.done .check-text {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--border);
+    }
+
+    .check-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .check-item.done .check-tag {
+      border-color: rgba(6,182,212,0.3);
+      color: var(--orange);
+      background: var(--orange-dim);
+    }
+
+    .checklist-note {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.58rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+      margin-top: 0.8rem;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .skill-card {
+      background: var(--card);
+      padding: 1.8rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+      transition: background 0.15s;
+    }
+    .skill-card:hover { background: #161616; }
+    .skill-icon {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 0.4rem;
+    }
+    .skill-name {
+      font-family: 'Oxanium', sans-serif; font-weight: 700;
+      font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .skill-desc {
+      font-size: 0.88rem; color: var(--sub); line-height: 1.6;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+    .tag {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.58rem;
+      letter-spacing: 0.06em; padding: 0.2rem 0.5rem;
+      border: 1px solid rgba(6,182,212,0.25);
+      color: var(--orange); background: var(--orange-dim); text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 1.2rem 4rem; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer span { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 1; transform: none; transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.pre-anim { opacity: 0; transform: translateY(22px); }
+    .reveal.on { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; }
+      .hero, .section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .what-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .hero-bg-text { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html">RAMY <span>W.</span></a>
+    <a class="nav-back" href="index.html">← Back to Portfolio</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg-text">HAND</div>
+    <div class="hero-eyebrow">Current Project — 2026 · In Progress</div>
+    <h1>The <span>Hand</span></h1>
+    <div class="hero-meta">
+      <div><div class="meta-label">Status</div><div class="meta-val">In Progress</div></div>
+      <div><div class="meta-label">Year</div><div class="meta-val">2026</div></div>
+      <div><div class="meta-label">Type</div><div class="meta-val">Mechanical · Electrical · Software</div></div>
+      <div><div class="meta-label">Stack</div><div class="meta-val">ROS2 · YOLOv8 · SolidWorks · Altium · STM32</div></div>
+    </div>
+  </div>
+
+  <!-- WHAT IT IS -->
+  <div class="section">
+    <div class="section-label">// 01 — What It Is</div>
+    <div class="what-grid">
+      <div class="reveal">
+        <h2>Autonomous 6DOF Robotic Arm</h2>
+        <p>The Hand is an autonomous 6DOF robotic arm that uses a camera module powered by a YOLOv8 model to perform multiple functions — including pouring a drink from a can or bottle into a cup, fully by itself.</p>
+        <p>This project was inspired by the countless 4DOF robotic arms on YouTube, but I wanted to combine my knowledge of Computer Vision and build something more technically impressive than the average engineering student project.</p>
+      </div>
+      <div class="what-visual reveal">
+        <div class="what-visual-bg">H</div>
+        <!-- TO ADD IMAGE: replace the two divs above with:
+             <img src="your-image.jpg" alt="The Hand" style="width:100%;height:100%;object-fit:cover;">
+        -->
+        <div class="what-visual-label">Image Coming Soon</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJECTIVES -->
+  <div class="section">
+    <div class="section-label">// 02 — Objectives</div>
+    <h2 style="margin-bottom: 0.4rem;">Build Checklist</h2>
+    <p style="margin-bottom: 2rem;">Checked off as I go.</p>
+
+    <div class="checklist reveal">
+      <!-- ============================================================
+           HOW TO ADD AN OBJECTIVE:
+           <div class="check-item">
+             <div class="check-box"><span class="check-box-tick">✓</span></div>
+             <span class="check-text">Your objective here</span>
+             <span class="check-tag">Hardware</span>
+           </div>
+
+           HOW TO PRE-MARK AS DONE:
+           <div class="check-item done">
+             ...same as above...
+           </div>
+
+           TAGS can be anything: Hardware, Software, Design, Testing, etc.
+      ============================================================ -->
+
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Create a basic URDF file for 6DOF Robotic arm</span>
+        <span class="check-tag">Design</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Use ROS2 to set up dummy logic to move robotic arm in Gazebo</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Implement forward and inverse kinematics using MoveIt for an arbitrary point</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Implement YOLOv8 Object Detection and integrate with ROS2</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Generate full CAD file for robotic arm in SolidWorks</span>
+        <span class="check-tag">Design</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Update URDF file and code to match CAD file</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Design the electrical system powering the arm</span>
+        <span class="check-tag">Hardware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Design firmware for the arm</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Design PCB for robotic arm in Altium Designer</span>
+        <span class="check-tag">Hardware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">3D print parts for robotic arm</span>
+        <span class="check-tag">Hardware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Build and Test!</span>
+        <span class="check-tag">Deployment</span>
+      </div>
+    </div>
+    <p class="checklist-note" style="margin-top: 0.8rem;">Progress updated by Ramy</p>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section">
+    <div class="section-label">// 03 — Skills I'll Get Out of It</div>
+    <h2 style="margin-bottom: 2rem;">What I'm Learning / Mastering</h2>
+    <div class="skills-grid reveal">
+
+      <!-- ============================================================
+           HOW TO EDIT A SKILL CARD:
+           Change the skill-icon (category label), skill-name (title),
+           skill-desc (description), and tags to match what you'll learn.
+      ============================================================ -->
+
+      <div class="skill-card">
+        <div class="skill-icon">// Mechanical Design</div>
+        <div class="skill-name">CAD & 3D Printing</div>
+        <p class="skill-desc">Designing a full 6DOF arm in SolidWorks with manufacturable joints, linkages, and mounting points — then printing and iterating on real hardware.</p>
+        <div class="tags"><span class="tag">SolidWorks</span><span class="tag">3D Printing</span><span class="tag">DFM</span></div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">// Electrical Design</div>
+        <div class="skill-name">PCB Design</div>
+        <p class="skill-desc">Designing a custom PCB in Altium Designer to power and control the arm's actuators, handle signal routing, and interface with the microcontroller.</p>
+        <div class="tags"><span class="tag">Altium</span><span class="tag">Schematics</span><span class="tag">PCB Layout</span></div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">// Software</div>
+        <div class="skill-name">ROS2 & MoveIt</div>
+        <p class="skill-desc">Building a full ROS2 stack from URDF modelling to MoveIt motion planning, running forward and inverse kinematics for real-time arm control.</p>
+        <div class="tags"><span class="tag">ROS2</span><span class="tag">MoveIt</span><span class="tag">Gazebo</span><span class="tag">URDF</span></div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">// Firmware</div>
+        <div class="skill-name">Embedded Firmware</div>
+        <p class="skill-desc">Writing low-level firmware for the STM32 to control servos and motors, handle sensor feedback, and communicate over serial protocols with the ROS2 stack.</p>
+        <div class="tags"><span class="tag">STM32</span><span class="tag">C</span><span class="tag">Serial</span><span class="tag">PWM</span></div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">// Computer Vision</div>
+        <div class="skill-name">Object Detection</div>
+        <p class="skill-desc">Training and deploying a YOLOv8 model to detect and localise objects in real time via a camera module, feeding coordinates into the arm's control pipeline.</p>
+        <div class="tags"><span class="tag">YOLOv8</span><span class="tag">Python</span><span class="tag">OpenCV</span></div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">// Software</div>
+        <div class="skill-name">C++ & System Integration</div>
+        <p class="skill-desc">Tying everything together — writing performant C++ ROS2 nodes, integrating vision with motion planning, and debugging a full hardware-software system end to end.</p>
+        <div class="tags"><span class="tag">C++</span><span class="tag">ROS2</span><span class="tag">Integration</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Ramy Wahib</span>
+    <span>The Hand — Current Build</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('on'), i * 70);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.add('pre-anim');
+      obs.observe(el);
+    });
+  </script>
+
+</body>
+</html>

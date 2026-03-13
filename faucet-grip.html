@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Outdoor Faucet Grip — Ramy Wahib</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" type="image/png" href="media/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #080808; --surface: #0f0f0f; --border: #1e1e1e; --orange: #06b6d4; --orange-dim: rgba(6,182,212,0.12); --text: #f2ede8; --muted: #5a5650; --sub: #9a9490; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-weight: 400; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--orange); }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; height: 60px; background: rgba(8,8,8,0.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); }
+    .logo { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text); }
+    .logo span { color: var(--orange); }
+    .nav-back { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--orange); }
+    .hero { padding: 120px 4rem 5rem; border-bottom: 1px solid var(--border); }
+    .breadcrumb { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+    .breadcrumb a { color: var(--orange); text-decoration: none; }
+    .proj-num { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--orange); letter-spacing: 0.15em; margin-bottom: 1rem; }
+    h1 { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: clamp(3rem, 8vw, 7rem); text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em; margin-bottom: 2.5rem; }
+    .hero-meta { display: flex; gap: 3rem; flex-wrap: wrap; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .meta-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .meta-val { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+    .content { max-width: 860px; padding: 5rem 4rem; }
+    .section { margin-bottom: 4rem; }
+    .section-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    p { font-size: 1rem; color: var(--sub); line-height: 1.8; margin-bottom: 1rem; }
+    .placeholder { border: 1px dashed var(--border); background: var(--surface); padding: 3rem 2rem; text-align: center; margin-bottom: 1rem; }
+    .placeholder p { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
+    .image-placeholder { width: 100%; aspect-ratio: 16/9; border: 1px dashed var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+    .image-placeholder p { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.06em; padding: 0.35rem 0.75rem; border: 1px solid rgba(6,182,212,0.25); color: var(--orange); background: var(--orange-dim); text-transform: uppercase; }
+    .links-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+    .link-btn { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.7rem 1.4rem; text-decoration: none; transition: opacity 0.2s; }
+    .link-btn.primary { background: var(--orange); color: #080808; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); }
+    .link-btn.outline { border: 1px solid var(--border); color: var(--sub); }
+    .link-btn:hover { opacity: 0.75; }
+    .nav-projects { border-top: 1px solid var(--border); padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    .np-link { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .np-link:hover { color: var(--orange); }
+    .np-label { font-size: 0.55rem; color: var(--muted); margin-bottom: 0.3rem; display: block; letter-spacing: 0.12em; }
+    .np-title { color: var(--text); }
+    footer { padding: 1.2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+    footer span { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    @media (max-width: 720px) { nav { padding: 0 1.5rem; } .hero, .content, .nav-projects, footer { padding-left: 1.5rem; padding-right: 1.5rem; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="index.html">RAMY <span>W.</span></a>
+    <a class="nav-back" href="index.html">← Back</a>
+  </nav>
+  <div class="hero">
+    <div class="breadcrumb"><a href="index.html">Portfolio</a> &nbsp;/&nbsp; Outdoor Faucet Grip</div>
+    <div class="proj-num">// 005</div>
+    <h1>OUTDOOR FAUCET<br>GRIP</h1>
+    <div class="hero-meta">
+      <div><div class="meta-label">Date</div><div class="meta-val">Oct – Dec 2025</div></div>
+      <div><div class="meta-label">Type</div><div class="meta-val">Mechanical Design · DFM</div></div>
+      <div><div class="meta-label">Stack</div><div class="meta-val">SolidWorks · HDPE · 3D Printing</div></div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="section">
+      <div class="section-label">Overview</div>
+      <p>Designed and prototyped a 3D-printable water-faucet grip in SolidWorks for patients with low grip strength, following parametric design principles.</p>
+      <p>Manufactured using HDPE for waterproofing and durability. DFM principles were applied throughout, ultimately reducing the required grip strength by 83%.</p>
+    </div>
+    <div class="section">
+      <div class="section-label">Media</div>
+      <div class="gallery-item">
+               <img src="media/FAUCET-THUMB.png" alt="Description">
+             </div>
+    </div>
+    <div class="section">
+      <div class="section-label">Technical Details</div>
+      <h2 style="font-family:'Oxanium',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Lever Arm Geometry</h2>
+  <p>The 83% grip strength reduction comes directly from the mechanical advantage created by extending the moment arm — worth explaining the torque calculation behind that number</p>
+  <h2 style="font-family:'Oxanium',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">DFM Principles</h2>
+  <p>Prienting the print to avoid support material on functional surfaces, keeping tolerances loose enough for FDM's dimensional variability</p>
+    </div>
+    <div class="section">
+      <div class="section-label">Challenges &amp; Learnings</div>
+      <div style="border-left:2px solid var(--orange);padding-left:1.2rem;">
+     <div style="font-family:'Oxanium',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;">Moment Arm Length Issues</div>
+      <p style= "margin:0;">too short and the mechanical advantage wasn't significant, too long and the lever would catch on surrounding pipes or be awkward to grip</p>
+    </div>
+    <div style="border-left:2px solid var(--orange);padding-left:1.2rem;">
+     <div style="font-family:'Oxanium',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;">Tolerancing</div>
+      <p style= "margin:0;">FDM prints are dimensionally inconsistent, so a friction fit that works on one print might be too loose or too tight on the next. Had to add tolerance offsets in SolidWorks and reprint multiple times</p>
+    </div>
+    </div>
+    <div class="section">
+      <div class="section-label">Tech Stack</div>
+      <div class="tags"><span class="tag">SolidWorks</span><span class="tag">HDPE</span><span class="tag">3D Printing</span><span class="tag">DFM</span><span class="tag">Parametric Design</span><span class="tag">Accessibility</span></div>
+    </div>
+    <div class="links-row">
+      <a class="link-btn primary" href="https://github.com/RamyWahib" target="_blank">View on GitHub ↗</a>
+      <a class="link-btn outline" href="index.html">← Back to Portfolio</a>
+    </div>
+  </div>
+  <div class="nav-projects">
+    <a class="np-link" href="arm-simulator.html"><span class="np-label">Previous Project</span><span class="np-title">← Arm Simulator</span></a>
+    <a class="np-link" href="goots.html"><span class="np-label">Next Project</span><span class="np-title">Goots →</span></a>
+  </div>
+  <footer><span>© 2026 Ramy Wahib</span><span>Mechatronics Engineering</span></footer>
+</body>
+</html>

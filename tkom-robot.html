@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="media/favicon.png">
+  <title>TKOM Robot — Ramy Wahib</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #080808; --surface: #0f0f0f; --card: #121212; --border: #1e1e1e; --orange: #06b6d4; --orange-dim: rgba(6,182,212,0.12); --orange-glow: rgba(6,182,212,0.06); --text: #f2ede8; --muted: #5a5650; --sub: #9a9490; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-weight: 400; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--orange); }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; height: 60px; background: rgba(8,8,8,0.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); }
+    .logo { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text); }
+    .logo span { color: var(--orange); }
+    .nav-back { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--orange); }
+    .hero { padding: 120px 4rem 5rem; border-bottom: 1px solid var(--border); }
+    .breadcrumb { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+    .breadcrumb a { color: var(--orange); text-decoration: none; }
+    .proj-num { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--orange); letter-spacing: 0.15em; margin-bottom: 1rem; }
+    h1 { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: clamp(3rem, 8vw, 7rem); text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em; margin-bottom: 2.5rem; }
+    .hero-meta { display: flex; gap: 3rem; flex-wrap: wrap; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .meta-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .meta-val { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+    .content { max-width: 860px; padding: 5rem 4rem; }
+    .section { margin-bottom: 4rem; }
+    .section-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    p { font-size: 1rem; color: var(--sub); line-height: 1.8; margin-bottom: 1rem; }
+    .placeholder { border: 1px dashed var(--border); background: var(--surface); padding: 3rem 2rem; text-align: center; margin-bottom: 1rem; }
+    .placeholder p { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.06em; padding: 0.35rem 0.75rem; border: 1px solid rgba(6,182,212,0.25); color: var(--orange); background: var(--orange-dim); text-transform: uppercase; }
+    .links-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+    .link-btn { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.7rem 1.4rem; text-decoration: none; transition: opacity 0.2s; }
+    .link-btn.primary { background: var(--orange); color: #080808; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); }
+    .link-btn.outline { border: 1px solid var(--border); color: var(--sub); }
+    .link-btn:hover { opacity: 0.75; }
+
+    /* GALLERY */
+    .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .gallery-item { position: relative; overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
+    .gallery-item.wide { grid-column: span 2; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 16/9; transition: transform 0.3s ease; cursor: zoom-in; }
+    .gallery-item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-add { aspect-ratio: 16/9; border: 1px dashed var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; }
+    .gallery-add p { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; text-align: center; padding: 0 2rem; margin: 0; }
+
+    /* ACADEMIC REPORT */
+    .report-block { border: 1px solid var(--border); background: var(--card); display: flex; align-items: center; gap: 2rem; padding: 2rem; transition: border-color 0.2s; text-decoration: none; }
+    .report-block:hover { border-color: var(--orange); }
+    .report-icon { width: 56px; height: 56px; flex-shrink: 0; border: 1px solid rgba(6,182,212,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); background: var(--orange-dim); }
+    .report-info { flex: 1; }
+    .report-title { font-family: 'Oxanium', sans-serif; font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text); margin-bottom: 0.25rem; }
+    .report-meta { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .report-arrow { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--orange); white-space: nowrap; }
+    .report-placeholder { border: 1px dashed var(--border); background: var(--surface); padding: 2rem; display: flex; align-items: center; gap: 1.5rem; }
+    .report-placeholder-icon { width: 56px; height: 56px; flex-shrink: 0; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); }
+    .report-placeholder-text { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); line-height: 2; }
+
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; padding: 2rem; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; border: 1px solid var(--border); }
+    .lightbox-close { position: absolute; top: 1.5rem; right: 2rem; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--muted); cursor: pointer; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; background: none; border: none; }
+    .lightbox-close:hover { color: var(--orange); }
+
+    .nav-projects { border-top: 1px solid var(--border); padding: 3rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+    .np-link { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .np-link:hover { color: var(--orange); }
+    .np-label { font-size: 0.55rem; color: var(--muted); margin-bottom: 0.3rem; display: block; letter-spacing: 0.12em; }
+    .np-title { color: var(--text); }
+    footer { padding: 1.2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+    footer span { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .reveal { opacity: 1; transform: none; transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.pre-anim { opacity: 0; transform: translateY(22px); }
+    .reveal.on { opacity: 1; transform: none; }
+
+    @media (max-width: 720px) {
+      nav { padding: 0 1.5rem; }
+      .hero, .content, .nav-projects, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .gallery { grid-template-columns: 1fr; }
+      .gallery-item.wide { grid-column: span 1; }
+      .report-block, .report-placeholder { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html">RAMY <span>W.</span></a>
+    <a class="nav-back" href="index.html">← Back</a>
+  </nav>
+
+  <div class="hero">
+    <div class="breadcrumb"><a href="index.html">Portfolio</a> &nbsp;/&nbsp; Projects &nbsp;/&nbsp; TKOM Robot</div>
+    <div class="proj-num">// 002</div>
+    <h1>TKOM<br>Robot</h1>
+    <div class="hero-meta">
+      <div><div class="meta-label">Date</div><div class="meta-val">Sep – Nov 2025</div></div>
+      <div><div class="meta-label">Type</div><div class="meta-val">Robotics · Game Dev</div></div>
+      <div><div class="meta-label">Stack</div><div class="meta-val">C++ · SolidWorks · 3D Printing</div></div>
+      <div><div class="meta-label">Report</div><div class="meta-val">50+ Pages</div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section reveal">
+      <div class="section-label">Overview</div>
+      <p>Engineered a robot that lets users insert custom hand-drawn images as maps for a personalised video game, paired with a 50+ page technical report.</p>
+      <p>Game logic including a gravity-based physics system and linear algebra calculations were implemented in C++. Hardware components including stabilisers, casings, and tensioners were designed in SolidWorks and 3D-printed on a Bambu P1S.</p>
+    </div>
+
+    <div class="section reveal">
+      <div class="section-label">Gallery</div>
+      <div class="gallery">
+
+        <!-- ============================================================
+             HOW TO ADD IMAGES:
+             <div class="gallery-item">
+               <img src="your-image.jpg" alt="Description">
+             </div>
+
+             WIDE (full width):
+             <div class="gallery-item wide">
+               <img src="your-image.jpg" alt="Description">
+             </div>
+
+             VIDEO:
+             <div class="gallery-item wide">
+               <video controls><source src="your-video.mp4" type="video/mp4"></video>
+             </div>
+
+             YOUTUBE:
+             <div class="gallery-item wide">
+               <iframe width="100%" style="aspect-ratio:16/9;border:none;"
+                 src="https://www.youtube.com/embed/YOUR_ID" allowfullscreen></iframe>
+             </div>
+        ============================================================ -->
+
+        <div class="gallery-item">
+               <img src="media/TKOM_TOP.jpeg" alt="Description">
+             </div>
+             <div class="gallery-item">
+               <img src="media/TKOM_PAPER.jpeg" alt="Description">
+             </div>
+             <div class="gallery-item">
+               <img src="media/TKOM_WIRING.jpeg" alt="Description">
+             </div>
+             <div class="gallery-item">
+               <img src="media/TKOM_TENSIONER.jpeg" alt="Description">
+             </div>
+
+      </div>
+    </div>
+
+    <div class="section reveal">
+      <div class="section-label">Technical Details</div>
+     <h2 style="font-family:'Oxanium',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Gravity-Based Logic</h2>
+  <p>Created and implemented a full functional physics system using C++. Controls the player jumps and runs in a continous Game Tick System.</p>
+
+  <h2 style="font-family:'Oxanium',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Custom-Made Mechanical Parts</h2>
+  <p>Designed custom made 3D parts, including casings, tensioner, stabilizers, etc. Utilized SolidWorks for CAD Process and a Bambu P1S for 3D printing.</p>
+    </div>
+
+    <div class="section reveal">
+      <div class="section-label">Challenges &amp; Learnings</div>
+      <div style="border-left:2px solid var(--orange);padding-left:1.2rem;">
+     <div style="font-family:'Oxanium',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;">Physics Logic</div>
+      <p style= "margin:0;">Physics logic was extremely hard to implement, since sensors were from the VEX IQ kit, therefore a lot of debugging and statement planning was needed to make sure it would work.</p>
+    </div>
+    <div style="border-left:2px solid var(--orange);padding-left:1.2rem;">
+     <div style="font-family:'Oxanium',sans-serif;font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem;">3D Printing Failures</div>
+      <p style= "margin:0;">Sizes and Tolerances for 3D printing ended up being inaccurate, and multiple iterations of the same part had to be designed.</p>
+    </div>
+<p></p> <p></p>
+    <div class="section reveal">
+      <div class="section-label">Academic Report</div>
+
+      <!-- ============================================================
+           TO ATTACH YOUR REPORT — replace the report-placeholder below:
+
+           Option A — PDF in your site folder:
+           <a class="report-block" href="tkom-report.pdf" target="_blank">
+             <div class="report-icon">PDF</div>
+             <div class="report-info">
+               <div class="report-title">TKOM Robot — Technical Report</div>
+               <div class="report-meta">PDF · 50+ Pages · Nov 2025</div>
+             </div>
+             <span class="report-arrow">View Report ↗</span>
+           </a>
+
+           Option B — Google Drive / OneDrive share link:
+           Same as above, set href to your shared URL.
+      ============================================================ -->
+
+       <a class="report-block" href="media/TKOM_REPORT.pdf" target="_blank">
+             <div class="report-icon">PDF</div>
+             <div class="report-info">
+               <div class="report-title">TKOM Robot — Technical Report</div>
+               <div class="report-meta">PDF · 50+ Pages · Nov 2025</div>
+             </div>
+             <span class="report-arrow">View Report ↗</span>
+           </a>
+    </div>
+
+    <div class="section reveal">
+      <div class="section-label">Tech Stack</div>
+      <div class="tags">
+        <span class="tag">C++</span>
+        <span class="tag">SolidWorks</span>
+        <span class="tag">3D Printing</span>
+        <span class="tag">Bambu P1S</span>
+        <span class="tag">Physics Engine</span>
+        <span class="tag">Linear Algebra</span>
+      </div>
+    </div>
+
+    <div class="links-row">
+      <a class="link-btn primary" href="https://github.com/RamyWahib/TKOM" target="_blank">View on GitHub ↗</a>
+      <a class="link-btn outline" href="index.html">← Back to Portfolio</a>
+    </div>
+
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <div class="nav-projects">
+    <a class="np-link" href="robot-racer.html">
+      <span class="np-label">Previous Project</span>
+      <span class="np-title">← Robot Racer</span>
+    </a>
+    <a class="np-link" href="cnn-scraper.html">
+      <span class="np-label">Next Project</span>
+      <span class="np-title">CNN Scraper →</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>© 2026 Ramy Wahib</span>
+    <span>Mechatronics Engineering</span>
+  </footer>
+
+  <script>
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.getElementById('lightbox-img').src = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.src); });
+    });
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('on'), i * 70);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.add('pre-anim');
+      obs.observe(el);
+    });
+  </script>
+
+</body>
+</html>
