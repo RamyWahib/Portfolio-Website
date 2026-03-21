@@ -110,7 +110,6 @@
       letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
       position: relative;
     }
-    /* TO ADD IMAGE: replace .what-visual div content with <img src="..." style="width:100%;height:100%;object-fit:cover;"> */
 
     /* ── OBJECTIVES CHECKLIST ── */
     .checklist {
@@ -118,6 +117,17 @@
       flex-direction: column;
       gap: 0;
       border: 1px solid var(--border);
+    }
+
+    .phase-divider {
+      padding: 0.55rem 1.5rem;
+      background: #0d0d0d;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
     }
 
     .check-item {
@@ -257,8 +267,9 @@
     <div class="what-grid">
       <div class="reveal">
         <h2>Autonomous 6DOF Robotic Arm</h2>
-        <p>The Hand is an autonomous 6DOF robotic arm that uses a camera module powered by a YOLOv8 model to perform multiple functions — including pouring a drink from a can or bottle into a cup, fully by itself.</p>
-        <p>This project was inspired by the countless 4DOF robotic arms on YouTube, but I wanted to combine my knowledge of Computer Vision and build something more technically impressive than the average engineering student project.</p>
+        <p>The Hand is an autonomous 6DOF robotic arm that uses a camera module powered by a fine-tuned YOLOv8 model to detect, classify, and sort medication pills into daily dose compartments — fully by itself.</p>
+        <p>Medication errors are one of the leading causes of preventable harm in elderly care, where managing multiple pills across multiple daily schedules is a real and ongoing problem. The Hand is a low-cost, open-source approach to automating that process — detecting pills by shape and colour in real time, then picking and placing them into the correct tray slot using a full vision-to-motion pipeline.</p>
+        <p>This project was inspired by the countless 4DOF robotic arms on YouTube, but I wanted to combine my knowledge of computer vision and robotics to build something more technically impressive — and actually useful.</p>
       </div>
       <div class="what-visual reveal">
         <div class="what-visual-bg">H</div>
@@ -277,77 +288,224 @@
     <p style="margin-bottom: 2rem;">Checked off as I go.</p>
 
     <div class="checklist reveal">
-      <!-- ============================================================
-           HOW TO ADD AN OBJECTIVE:
-           <div class="check-item">
-             <div class="check-box"><span class="check-box-tick">✓</span></div>
-             <span class="check-text">Your objective here</span>
-             <span class="check-tag">Hardware</span>
-           </div>
+      <!--
+        ============================================================
+        HOW TO ADD AN OBJECTIVE:
+        <div class="check-item">
+          <div class="check-box"><span class="check-box-tick">✓</span></div>
+          <span class="check-text">Your objective here</span>
+          <span class="check-tag">Tag</span>
+        </div>
 
-           HOW TO PRE-MARK AS DONE:
-           <div class="check-item done">
-             ...same as above...
-           </div>
+        HOW TO MARK AS DONE — add class "done" to the check-item:
+        <div class="check-item done">
+          ...same as above...
+        </div>
 
-           TAGS can be anything: Hardware, Software, Design, Testing, etc.
-      ============================================================ -->
+        PHASE DIVIDERS:
+        <div class="phase-divider">// Phase N — Phase Name</div>
+
+        TAGS can be: Design, Software, Hardware, Firmware, Vision, Deployment
+        ============================================================
+      -->
+
+      <!-- PHASE 1 -->
+      <div class="phase-divider">// Phase 1 — Robot Modeling</div>
 
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Create a basic URDF file for 6DOF Robotic arm</span>
+        <span class="check-text">Generate xacro file — 6 links, 6 joints, joint limits, inertia values</span>
         <span class="check-tag">Design</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Use ROS2 to set up dummy logic to move robotic arm in Gazebo</span>
-        <span class="check-tag">Software</span>
-      </div>
-      <div class="check-item">
-        <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Implement forward and inverse kinematics using MoveIt for an arbitrary point</span>
-        <span class="check-tag">Software</span>
-      </div>
-      <div class="check-item">
-        <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Implement YOLOv8 Object Detection and integrate with ROS2</span>
-        <span class="check-tag">Software</span>
-      </div>
-      <div class="check-item">
-        <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Generate full CAD file for robotic arm in SolidWorks</span>
+        <span class="check-text">Add camera link to end-effector with Gazebo Harmonic sensor plugin</span>
         <span class="check-tag">Design</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Update URDF file and code to match CAD file</span>
+        <span class="check-text">Load and verify all 6 DOFs in Gazebo Harmonic</span>
         <span class="check-tag">Software</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Design the electrical system powering the arm</span>
-        <span class="check-tag">Hardware</span>
+        <span class="check-text">Visualise TF frames and joint states in RViz2</span>
+        <span class="check-tag">Software</span>
       </div>
+
+      <!-- PHASE 2 -->
+      <div class="phase-divider">// Phase 2 — Arm Control + IK</div>
+
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Design firmware for the arm</span>
+        <span class="check-text">Set up MoveIt 2 — run setup assistant, generate SRDF and controller configs</span>
         <span class="check-tag">Software</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Design PCB for robotic arm in Altium Designer</span>
+        <span class="check-text">Test IK in RViz2 — drag end-effector to arbitrary poses</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Write Python MoveIt client using MoveGroupInterface API</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Test hardcoded pick-and-place motion in simulation</span>
+        <span class="check-tag">Software</span>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="phase-divider">// Phase 3 — Vision (YOLOv8)</div>
+
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Collect pill dataset — NIH Pillbox + own photos of proxy objects</span>
+        <span class="check-tag">Vision</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Label dataset in Roboflow and fine-tune YOLOv8 model</span>
+        <span class="check-tag">Vision</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Wrap YOLOv8 inference as a ROS 2 node publishing detections</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Test pill detection on simulated camera feed in Gazebo</span>
+        <span class="check-tag">Vision</span>
+      </div>
+
+      <!-- PHASE 4 -->
+      <div class="phase-divider">// Phase 4 — Full Simulation Integration</div>
+
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Compute hand-eye calibration transform in simulation</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Build perception → planning bridge node (YOLO detections → 3D coords → MoveIt)</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Implement full control loop end-to-end in Gazebo</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Tune and stress-test — multiple pills, varied positions, edge cases</span>
+        <span class="check-tag">Software</span>
+      </div>
+
+      <!-- PHASE 5 -->
+      <div class="phase-divider">// Phase 5 — Physical Build</div>
+
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Design full 6DOF arm CAD in SolidWorks using xacro dimensions as reference</span>
+        <span class="check-tag">Design</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Source components — servos, ESP32, Raspberry Pi 4, camera, PSU</span>
         <span class="check-tag">Hardware</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">3D print parts for robotic arm</span>
+        <span class="check-text">Breadboard prototype — verify ESP32 ↔ Pi UART comms and servo response</span>
         <span class="check-tag">Hardware</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Build and Test!</span>
+        <span class="check-text">3D print all arm links and assemble</span>
+        <span class="check-tag">Hardware</span>
+      </div>
+
+      <!-- PHASE 5B -->
+      <div class="phase-divider">// Phase 5b — Firmware</div>
+
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Set up micro-ROS on ESP32 — agent, transport layer, build system</span>
+        <span class="check-tag">Firmware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Write PWM control firmware using ESP32 LEDC hardware timer API</span>
+        <span class="check-tag">Firmware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Subscribe to /joint_commands topic and drive all 6 servo outputs</span>
+        <span class="check-tag">Firmware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Validate firmware end-to-end — Pi publishes, ESP32 moves servos correctly</span>
+        <span class="check-tag">Firmware</span>
+      </div>
+
+      <!-- PHASE 6 -->
+      <div class="phase-divider">// Phase 6 — PCB Design & Fabrication</div>
+
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Design schematic in Altium — ESP32, PCA9685, servo headers, UART, power input</span>
+        <span class="check-tag">Hardware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Route 2-layer PCB layout — wide servo power traces, separated ground planes</span>
+        <span class="check-tag">Hardware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Run DRC, review Gerbers, export Excellon drill file for JLCPCB</span>
+        <span class="check-tag">Hardware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Order boards from JLCPCB, solder components, bring-up test</span>
+        <span class="check-tag">Hardware</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Swap breadboard prototype for finished PCB, re-run servo tests</span>
+        <span class="check-tag">Hardware</span>
+      </div>
+
+      <!-- PHASE 7 -->
+      <div class="phase-divider">// Phase 7 — Real-World Deployment</div>
+
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Install ROS 2 Jazzy on Raspberry Pi, transfer and verify all packages</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Real hand-eye calibration using checkerboard + easy_handeye2</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Retune YOLOv8 on real photos under workspace lighting</span>
+        <span class="check-tag">Vision</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">End-to-end real-world test — detect, pick, and sort real pills</span>
         <span class="check-tag">Deployment</span>
       </div>
+
     </div>
     <p class="checklist-note" style="margin-top: 0.8rem;">Progress updated by Ramy</p>
   </div>
@@ -357,12 +515,6 @@
     <div class="section-label">// 03 — Skills I'll Get Out of It</div>
     <h2 style="margin-bottom: 2rem;">What I'm Learning / Mastering</h2>
     <div class="skills-grid reveal">
-
-      <!-- ============================================================
-           HOW TO EDIT A SKILL CARD:
-           Change the skill-icon (category label), skill-name (title),
-           skill-desc (description), and tags to match what you'll learn.
-      ============================================================ -->
 
       <div class="skill-card">
         <div class="skill-icon">// Mechanical Design</div>
@@ -388,15 +540,15 @@
       <div class="skill-card">
         <div class="skill-icon">// Firmware</div>
         <div class="skill-name">Embedded Firmware</div>
-        <p class="skill-desc">Writing low-level firmware for the STM32 to control servos and motors, handle sensor feedback, and communicate over serial protocols with the ROS2 stack.</p>
-        <div class="tags"><span class="tag">STM32</span><span class="tag">C</span><span class="tag">Serial</span><span class="tag">PWM</span></div>
+        <p class="skill-desc">Writing micro-ROS firmware for the ESP32 to subscribe to ROS 2 joint commands, drive servo PWM outputs via hardware timers, and communicate with the Raspberry Pi over UART.</p>
+        <div class="tags"><span class="tag">ESP32</span><span class="tag">micro-ROS</span><span class="tag">C++</span><span class="tag">PWM</span></div>
       </div>
 
       <div class="skill-card">
         <div class="skill-icon">// Computer Vision</div>
         <div class="skill-name">Object Detection</div>
-        <p class="skill-desc">Training and deploying a YOLOv8 model to detect and localise objects in real time via a camera module, feeding coordinates into the arm's control pipeline.</p>
-        <div class="tags"><span class="tag">YOLOv8</span><span class="tag">Python</span><span class="tag">OpenCV</span></div>
+        <p class="skill-desc">Training and deploying a fine-tuned YOLOv8 model to detect and classify medication pills in real time, feeding localised coordinates into the arm's motion planning pipeline.</p>
+        <div class="tags"><span class="tag">YOLOv8</span><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Roboflow</span></div>
       </div>
 
       <div class="skill-card">
