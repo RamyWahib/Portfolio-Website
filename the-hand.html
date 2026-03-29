@@ -21,7 +21,6 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--orange); }
 
-    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 999;
       display: flex; align-items: center; justify-content: space-between;
@@ -34,12 +33,10 @@
     .nav-back { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-back:hover { color: var(--orange); }
 
-    /* ── HERO ── */
     .hero {
       padding: 140px 4rem 6rem;
       border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .hero-bg-text {
       position: absolute; top: 50%; right: -1rem;
@@ -69,7 +66,6 @@
     .meta-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
     .meta-val { font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; color: var(--text); font-weight: 500; }
 
-    /* ── SECTIONS ── */
     .section { padding: 5rem 4rem; border-bottom: 1px solid var(--border); }
     .section-label {
       font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
@@ -85,149 +81,47 @@
     p { font-size: 1rem; color: var(--sub); line-height: 1.8; margin-bottom: 1rem; }
     p:last-child { margin-bottom: 0; }
 
-    /* ── WHAT IT IS ── */
-    .what-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
+    .what-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: start; }
     .what-visual {
-      border: 1px solid var(--border);
-      background: var(--card);
-      aspect-ratio: 4/3;
-      display: flex; flex-direction: column;
+      border: 1px solid var(--border); background: var(--card);
+      aspect-ratio: 4/3; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       gap: 1rem; position: relative; overflow: hidden;
     }
-    .what-visual-bg {
-      font-family: 'Oxanium', sans-serif; font-weight: 800;
-      font-size: 7rem; color: #141414; text-transform: uppercase;
-      position: absolute; user-select: none;
-    }
-    .what-visual-label {
-      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
-      letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
-      position: relative;
-    }
+    .what-visual-bg { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: 7rem; color: #141414; text-transform: uppercase; position: absolute; user-select: none; }
+    .what-visual-label { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); position: relative; }
 
-    /* ── OBJECTIVES CHECKLIST ── */
-    .checklist {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border: 1px solid var(--border);
-    }
-
+    .checklist { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
     .phase-divider {
-      padding: 0.55rem 1.5rem;
-      background: #0d0d0d;
+      padding: 0.55rem 1.5rem; background: #0d0d0d;
       border-bottom: 1px solid var(--border);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--orange);
+      font-family: 'Share Tech Mono', monospace; font-size: 0.58rem;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange);
     }
-
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      padding: 1.1rem 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
+    .check-item { display: flex; align-items: center; gap: 1.2rem; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); }
     .check-item:last-child { border-bottom: none; }
-
-    .check-box {
-      width: 18px; height: 18px; flex-shrink: 0;
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .check-item.done .check-box {
-      border-color: var(--orange);
-      background: var(--orange-dim);
-    }
-    .check-box-tick {
-      font-size: 0.65rem; color: var(--orange); opacity: 0;
-      transition: opacity 0.2s;
-    }
+    .check-box { width: 18px; height: 18px; flex-shrink: 0; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, background 0.2s; }
+    .check-item.done .check-box { border-color: var(--orange); background: var(--orange-dim); }
+    .check-box-tick { font-size: 0.65rem; color: var(--orange); opacity: 0; transition: opacity 0.2s; }
     .check-item.done .check-box-tick { opacity: 1; }
+    .check-text { font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 500; color: var(--text); flex: 1; transition: color 0.2s; }
+    .check-item.done .check-text { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--border); }
+    .check-tag { font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.5rem; border: 1px solid var(--border); color: var(--muted); }
+    .check-item.done .check-tag { border-color: rgba(6,182,212,0.3); color: var(--orange); background: var(--orange-dim); }
+    .checklist-note { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.8rem; }
 
-    .check-text {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.95rem; font-weight: 500; color: var(--text);
-      flex: 1; transition: color 0.2s;
-    }
-    .check-item.done .check-text {
-      color: var(--muted);
-      text-decoration: line-through;
-      text-decoration-color: var(--border);
-    }
-
-    .check-tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 0.15rem 0.5rem;
-      border: 1px solid var(--border); color: var(--muted);
-    }
-    .check-item.done .check-tag {
-      border-color: rgba(6,182,212,0.3);
-      color: var(--orange);
-      background: var(--orange-dim);
-    }
-
-    .checklist-note {
-      font-family: 'Share Tech Mono', monospace; font-size: 0.58rem;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-      margin-top: 0.8rem;
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-    .skill-card {
-      background: var(--card);
-      padding: 1.8rem;
-      display: flex; flex-direction: column; gap: 0.6rem;
-      transition: background 0.15s;
-    }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .skill-card { background: var(--card); padding: 1.8rem; display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.15s; }
     .skill-card:hover { background: #161616; }
-    .skill-icon {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--orange);
-      margin-bottom: 0.4rem;
-    }
-    .skill-name {
-      font-family: 'Oxanium', sans-serif; font-weight: 700;
-      font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em;
-    }
-    .skill-desc {
-      font-size: 0.88rem; color: var(--sub); line-height: 1.6;
-    }
+    .skill-icon { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.4rem; }
+    .skill-name { font-family: 'Oxanium', sans-serif; font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .skill-desc { font-size: 0.88rem; color: var(--sub); line-height: 1.6; }
     .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
-    .tag {
-      font-family: 'Share Tech Mono', monospace; font-size: 0.58rem;
-      letter-spacing: 0.06em; padding: 0.2rem 0.5rem;
-      border: 1px solid rgba(6,182,212,0.25);
-      color: var(--orange); background: var(--orange-dim); text-transform: uppercase;
-    }
+    .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.06em; padding: 0.2rem 0.5rem; border: 1px solid rgba(6,182,212,0.25); color: var(--orange); background: var(--orange-dim); text-transform: uppercase; }
 
-    /* ── FOOTER ── */
-    footer {
-      padding: 1.2rem 4rem; border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
+    footer { padding: 1.2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
     footer span { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
-    /* ── REVEAL ── */
     .reveal { opacity: 1; transform: none; transition: opacity 0.55s ease, transform 0.55s ease; }
     .reveal.pre-anim { opacity: 0; transform: translateY(22px); }
     .reveal.on { opacity: 1; transform: none; }
@@ -249,7 +143,6 @@
     <a class="nav-back" href="index.html">← Back to Portfolio</a>
   </nav>
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-bg-text">HAND</div>
     <div class="hero-eyebrow">Current Project — 2026 · In Progress</div>
@@ -258,31 +151,26 @@
       <div><div class="meta-label">Status</div><div class="meta-val">In Progress</div></div>
       <div><div class="meta-label">Year</div><div class="meta-val">2026</div></div>
       <div><div class="meta-label">Type</div><div class="meta-val">Mechanical · Electrical · Software</div></div>
-      <div><div class="meta-label">Stack</div><div class="meta-val">ROS2 · YOLOv8 · SolidWorks · Altium · STM32</div></div>
+      <div><div class="meta-label">Stack</div><div class="meta-val">ROS2 · YOLOv8 · Whisper · SolidWorks · Altium · ESP32</div></div>
     </div>
   </div>
 
-  <!-- WHAT IT IS -->
   <div class="section">
     <div class="section-label">// 01 — What It Is</div>
     <div class="what-grid">
       <div class="reveal">
-        <h2>Autonomous 6DOF Robotic Arm</h2>
-        <p>The Hand is an autonomous 6DOF robotic arm that uses a camera module powered by a fine-tuned YOLOv8 model to detect, classify, and sort medication pills into daily dose compartments — fully by itself.</p>
-        <p>Medication errors are one of the leading causes of preventable harm in elderly care, where managing multiple pills across multiple daily schedules is a real and ongoing problem. The Hand is a low-cost, open-source approach to automating that process — detecting pills by shape and colour in real time, then picking and placing them into the correct tray slot using a full vision-to-motion pipeline.</p>
-        <p>This project was inspired by the countless 4DOF robotic arms on YouTube, but I wanted to combine my knowledge of computer vision and robotics to build something more technically impressive — and actually useful.</p>
+        <h2>Accessible Chess Arm</h2>
+        <p>The Hand is an autonomous 6DOF robotic arm that lets people with motor disabilities play physical chess through voice control and computer vision — fully hands-free.</p>
+        <p>Many people living with conditions like ALS, muscular dystrophy, or severe arthritis love chess but physically can't manipulate the pieces. Existing solutions push them to digital-only play, removing the social experience of sitting across a real board from another person. The Hand bridges that gap — a voice command triggers the arm to pick up and move the correct piece on a real board, while YOLOv8 tracks the full board state in real time to confirm every move.</p>
+        <p>This project was inspired by the countless 4DOF robotic arms on YouTube, but I wanted to combine computer vision, voice recognition, and robotics to build something more technically impressive — and genuinely useful to people.</p>
       </div>
       <div class="what-visual reveal">
         <div class="what-visual-bg">H</div>
-        <!-- TO ADD IMAGE: replace the two divs above with:
-             <img src="your-image.jpg" alt="The Hand" style="width:100%;height:100%;object-fit:cover;">
-        -->
         <div class="what-visual-label">Image Coming Soon</div>
       </div>
     </div>
   </div>
 
-  <!-- OBJECTIVES -->
   <div class="section">
     <div class="section-label">// 02 — Objectives</div>
     <h2 style="margin-bottom: 0.4rem;">Build Checklist</h2>
@@ -290,27 +178,11 @@
 
     <div class="checklist reveal">
       <!--
-        ============================================================
-        HOW TO ADD AN OBJECTIVE:
-        <div class="check-item">
-          <div class="check-box"><span class="check-box-tick">✓</span></div>
-          <span class="check-text">Your objective here</span>
-          <span class="check-tag">Tag</span>
-        </div>
-
-        HOW TO MARK AS DONE — add class "done" to the check-item:
+        HOW TO MARK AS DONE — add class "done" to check-item:
         <div class="check-item done">
-          ...same as above...
-        </div>
-
-        PHASE DIVIDERS:
-        <div class="phase-divider">// Phase N — Phase Name</div>
-
-        TAGS can be: Design, Software, Hardware, Firmware, Vision, Deployment
-        ============================================================
+        TAGS: Design, Software, Hardware, Firmware, Vision, Voice, Deployment
       -->
 
-      <!-- PHASE 1 -->
       <div class="phase-divider">// Phase 1 — Robot Modeling</div>
 
       <div class="check-item done">
@@ -334,7 +206,6 @@
         <span class="check-tag">Software</span>
       </div>
 
-      <!-- PHASE 2 -->
       <div class="phase-divider">// Phase 2 — Arm Control + IK</div>
 
       <div class="check-item done">
@@ -349,7 +220,7 @@
       </div>
       <div class="check-item done">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Write Python MoveIt client using MoveGroupInterface API</span>
+        <span class="check-text">Write Python MoveIt client using MoveItPy API</span>
         <span class="check-tag">Software</span>
       </div>
       <div class="check-item done">
@@ -358,12 +229,11 @@
         <span class="check-tag">Software</span>
       </div>
 
-      <!-- PHASE 3 -->
       <div class="phase-divider">// Phase 3 — Vision (YOLOv8)</div>
 
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Collect pill dataset — NIH Pillbox + own photos of proxy objects</span>
+        <span class="check-text">Collect chess piece dataset — photos of all 12 piece types on a real board</span>
         <span class="check-tag">Vision</span>
       </div>
       <div class="check-item">
@@ -373,41 +243,72 @@
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Wrap YOLOv8 inference as a ROS 2 node publishing detections</span>
+        <span class="check-text">Detect all piece types and map detections to board squares (a1–h8)</span>
+        <span class="check-tag">Vision</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Wrap YOLO board state tracker as a ROS 2 node</span>
         <span class="check-tag">Software</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Test pill detection on simulated camera feed in Gazebo</span>
+        <span class="check-text">Test board detection on simulated camera feed in Gazebo</span>
         <span class="check-tag">Vision</span>
       </div>
 
-      <!-- PHASE 4 -->
-      <div class="phase-divider">// Phase 4 — Full Simulation Integration</div>
+      <div class="phase-divider">// Phase 4 — Voice Control</div>
 
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Compute hand-eye calibration transform in simulation</span>
+        <span class="check-text">Integrate OpenAI Whisper for real-time speech-to-text</span>
+        <span class="check-tag">Voice</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Parse spoken move (e.g. "e2 to e4") into source and destination squares</span>
+        <span class="check-tag">Voice</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Validate move legality against current board state from YOLO</span>
         <span class="check-tag">Software</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Build perception → planning bridge node (YOLO detections → 3D coords → MoveIt)</span>
-        <span class="check-tag">Software</span>
-      </div>
-      <div class="check-item">
-        <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Implement full control loop end-to-end in Gazebo</span>
-        <span class="check-tag">Software</span>
-      </div>
-      <div class="check-item">
-        <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Tune and stress-test — multiple pills, varied positions, edge cases</span>
+        <span class="check-text">Wrap voice pipeline as a ROS 2 node publishing to /chess_move</span>
         <span class="check-tag">Software</span>
       </div>
 
-      <!-- PHASE 5 -->
-      <div class="phase-divider">// Phase 5 — Physical Build</div>
+      <div class="phase-divider">// Phase 5 — Full Simulation Integration</div>
+
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Compute hand-eye calibration — camera frame to robot base frame</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Map chess board square coordinates to robot workspace coordinates</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Build voice → vision → planning bridge node</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Implement full control loop — hear move, locate piece, pick, place, confirm</span>
+        <span class="check-tag">Software</span>
+      </div>
+      <div class="check-item">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Tune and stress-test in simulation — varied moves, captures, edge squares</span>
+        <span class="check-tag">Software</span>
+      </div>
+
+      <div class="phase-divider">// Phase 6 — Physical Build</div>
 
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
@@ -430,8 +331,7 @@
         <span class="check-tag">Hardware</span>
       </div>
 
-      <!-- PHASE 5B -->
-      <div class="phase-divider">// Phase 5b — Firmware</div>
+      <div class="phase-divider">// Phase 6b — Firmware</div>
 
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
@@ -445,7 +345,7 @@
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Subscribe to /joint_commands topic and drive all 6 servo outputs</span>
+        <span class="check-text">Subscribe to /joint_commands and drive all 6 servo outputs</span>
         <span class="check-tag">Firmware</span>
       </div>
       <div class="check-item">
@@ -454,8 +354,7 @@
         <span class="check-tag">Firmware</span>
       </div>
 
-      <!-- PHASE 6 -->
-      <div class="phase-divider">// Phase 6 — PCB Design & Fabrication</div>
+      <div class="phase-divider">// Phase 7 — PCB Design & Fabrication</div>
 
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
@@ -483,8 +382,7 @@
         <span class="check-tag">Hardware</span>
       </div>
 
-      <!-- PHASE 7 -->
-      <div class="phase-divider">// Phase 7 — Real-World Deployment</div>
+      <div class="phase-divider">// Phase 8 — Real-World Deployment</div>
 
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
@@ -498,12 +396,12 @@
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Retune YOLOv8 on real photos under workspace lighting</span>
+        <span class="check-text">Retune YOLO under real lighting and board setup conditions</span>
         <span class="check-tag">Vision</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">End-to-end real-world test — detect, pick, and sort real pills</span>
+        <span class="check-text">End-to-end real-world test — speak a move, arm executes it on a real board</span>
         <span class="check-tag">Deployment</span>
       </div>
 
@@ -511,7 +409,6 @@
     <p class="checklist-note" style="margin-top: 0.8rem;">Progress updated by Ramy</p>
   </div>
 
-  <!-- SKILLS -->
   <div class="section">
     <div class="section-label">// 03 — Skills I'll Get Out of It</div>
     <h2 style="margin-bottom: 2rem;">What I'm Learning / Mastering</h2>
@@ -527,14 +424,14 @@
       <div class="skill-card">
         <div class="skill-icon">// Electrical Design</div>
         <div class="skill-name">PCB Design</div>
-        <p class="skill-desc">Designing a custom PCB in Altium Designer to power and control the arm's actuators, handle signal routing, and interface with the microcontroller.</p>
+        <p class="skill-desc">Designing a custom PCB in Altium Designer to power and control the arm's actuators, handle signal routing, and interface with the ESP32 microcontroller.</p>
         <div class="tags"><span class="tag">Altium</span><span class="tag">Schematics</span><span class="tag">PCB Layout</span></div>
       </div>
 
       <div class="skill-card">
         <div class="skill-icon">// Software</div>
         <div class="skill-name">ROS2 & MoveIt</div>
-        <p class="skill-desc">Building a full ROS2 stack from URDF modelling to MoveIt motion planning, running forward and inverse kinematics for real-time arm control.</p>
+        <p class="skill-desc">Building a full ROS2 stack from URDF modelling to MoveIt motion planning, running inverse kinematics for real-time arm control driven by voice and vision inputs.</p>
         <div class="tags"><span class="tag">ROS2</span><span class="tag">MoveIt</span><span class="tag">Gazebo</span><span class="tag">URDF</span></div>
       </div>
 
@@ -548,15 +445,15 @@
       <div class="skill-card">
         <div class="skill-icon">// Computer Vision</div>
         <div class="skill-name">Object Detection</div>
-        <p class="skill-desc">Training and deploying a fine-tuned YOLOv8 model to detect and classify medication pills in real time, feeding localised coordinates into the arm's motion planning pipeline.</p>
+        <p class="skill-desc">Training and deploying a fine-tuned YOLOv8 model to detect chess pieces and track full board state in real time, mapping piece positions to robot workspace coordinates.</p>
         <div class="tags"><span class="tag">YOLOv8</span><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Roboflow</span></div>
       </div>
 
       <div class="skill-card">
-        <div class="skill-icon">// Software</div>
-        <div class="skill-name">C++ & System Integration</div>
-        <p class="skill-desc">Tying everything together — writing performant C++ ROS2 nodes, integrating vision with motion planning, and debugging a full hardware-software system end to end.</p>
-        <div class="tags"><span class="tag">C++</span><span class="tag">ROS2</span><span class="tag">Integration</span></div>
+        <div class="skill-icon">// Voice & Integration</div>
+        <div class="skill-name">Voice Control Pipeline</div>
+        <p class="skill-desc">Integrating OpenAI Whisper for real-time speech recognition, parsing spoken chess moves into board coordinates, and tying voice, vision, and motion planning into one autonomous system.</p>
+        <div class="tags"><span class="tag">Whisper</span><span class="tag">NLP</span><span class="tag">ROS2</span><span class="tag">Integration</span></div>
       </div>
 
     </div>
@@ -568,7 +465,6 @@
   </footer>
 
   <script>
-    // Scroll reveal
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
