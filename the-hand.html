@@ -20,84 +20,32 @@
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--orange); }
-
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 4rem; height: 60px;
-      background: rgba(8,8,8,0.95); border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(16px);
-    }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; display: flex; align-items: center; justify-content: space-between; padding: 0 4rem; height: 60px; background: rgba(8,8,8,0.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); }
     .logo { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.2em; text-decoration: none; color: var(--text); }
     .logo span { color: var(--orange); }
     .nav-back { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-back:hover { color: var(--orange); }
-
-    .hero {
-      padding: 140px 4rem 6rem;
-      border-bottom: 1px solid var(--border);
-      position: relative; overflow: hidden;
-    }
-    .hero-bg-text {
-      position: absolute; top: 50%; right: -1rem;
-      transform: translateY(-50%);
-      font-family: 'Oxanium', sans-serif; font-weight: 800;
-      font-size: clamp(6rem, 20vw, 20rem);
-      text-transform: uppercase; color: #0d0d0d;
-      pointer-events: none; user-select: none; line-height: 1;
-    }
-    .hero-eyebrow {
-      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange);
-      margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem;
-    }
+    .hero { padding: 140px 4rem 6rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-bg-text { position: absolute; top: 50%; right: -1rem; transform: translateY(-50%); font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: clamp(6rem, 20vw, 20rem); text-transform: uppercase; color: #0d0d0d; pointer-events: none; user-select: none; line-height: 1; }
+    .hero-eyebrow { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
     .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
-    h1 {
-      font-family: 'Oxanium', sans-serif; font-weight: 800;
-      font-size: clamp(3.5rem, 10vw, 9rem);
-      text-transform: uppercase; line-height: 0.9;
-      letter-spacing: -0.01em; margin-bottom: 2.5rem; position: relative;
-    }
+    h1 { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: clamp(3.5rem, 10vw, 9rem); text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em; margin-bottom: 2.5rem; position: relative; }
     h1 span { color: var(--orange); }
-    .hero-meta {
-      display: flex; gap: 3rem; flex-wrap: wrap;
-      padding-top: 2rem; border-top: 1px solid var(--border); position: relative;
-    }
+    .hero-meta { display: flex; gap: 3rem; flex-wrap: wrap; padding-top: 2rem; border-top: 1px solid var(--border); position: relative; }
     .meta-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
     .meta-val { font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; color: var(--text); font-weight: 500; }
-
     .section { padding: 5rem 4rem; border-bottom: 1px solid var(--border); }
-    .section-label {
-      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
-      letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange);
-      margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem;
-    }
+    .section-label { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
     .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-    h2 {
-      font-family: 'Oxanium', sans-serif; font-weight: 700;
-      font-size: clamp(1.4rem, 3vw, 2rem); text-transform: uppercase;
-      letter-spacing: 0.04em; margin-bottom: 1.2rem;
-    }
+    h2 { font-family: 'Oxanium', sans-serif; font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1.2rem; }
     p { font-size: 1rem; color: var(--sub); line-height: 1.8; margin-bottom: 1rem; }
     p:last-child { margin-bottom: 0; }
-
     .what-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: start; }
-    .what-visual {
-      border: 1px solid var(--border); background: var(--card);
-      aspect-ratio: 4/3; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 1rem; position: relative; overflow: hidden;
-    }
+    .what-visual { border: 1px solid var(--border); background: var(--card); aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; position: relative; overflow: hidden; }
     .what-visual-bg { font-family: 'Oxanium', sans-serif; font-weight: 800; font-size: 7rem; color: #141414; text-transform: uppercase; position: absolute; user-select: none; }
     .what-visual-label { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); position: relative; }
-
     .checklist { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
-    .phase-divider {
-      padding: 0.55rem 1.5rem; background: #0d0d0d;
-      border-bottom: 1px solid var(--border);
-      font-family: 'Share Tech Mono', monospace; font-size: 0.58rem;
-      letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange);
-    }
+    .phase-divider { padding: 0.55rem 1.5rem; background: #0d0d0d; border-bottom: 1px solid var(--border); font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); }
     .check-item { display: flex; align-items: center; gap: 1.2rem; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); }
     .check-item:last-child { border-bottom: none; }
     .check-box { width: 18px; height: 18px; flex-shrink: 0; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, background 0.2s; }
@@ -109,7 +57,6 @@
     .check-tag { font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.5rem; border: 1px solid var(--border); color: var(--muted); }
     .check-item.done .check-tag { border-color: rgba(6,182,212,0.3); color: var(--orange); background: var(--orange-dim); }
     .checklist-note { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.8rem; }
-
     .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
     .skill-card { background: var(--card); padding: 1.8rem; display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.15s; }
     .skill-card:hover { background: #161616; }
@@ -118,14 +65,11 @@
     .skill-desc { font-size: 0.88rem; color: var(--sub); line-height: 1.6; }
     .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
     .tag { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.06em; padding: 0.2rem 0.5rem; border: 1px solid rgba(6,182,212,0.25); color: var(--orange); background: var(--orange-dim); text-transform: uppercase; }
-
     footer { padding: 1.2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
     footer span { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
-
     .reveal { opacity: 1; transform: none; transition: opacity 0.55s ease, transform 0.55s ease; }
     .reveal.pre-anim { opacity: 0; transform: translateY(22px); }
     .reveal.on { opacity: 1; transform: none; }
-
     @media (max-width: 900px) {
       nav { padding: 0 1.5rem; }
       .hero, .section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
@@ -231,24 +175,29 @@
 
       <div class="phase-divider">// Phase 3 — Vision (YOLOv8)</div>
 
-      <div class="check-item">
+      <div class="check-item done">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Collect chess piece dataset — photos of all 12 piece types on a real board</span>
+        <span class="check-text">Source a pre-labelled chess piece dataset from Roboflow Universe</span>
+        <span class="check-tag">Vision</span>
+      </div>
+      <div class="check-item done">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Fine-tune YOLOv8n on dataset — achieved mAP50 of 0.982 across all 6 piece types</span>
+        <span class="check-tag">Vision</span>
+      </div>
+      <div class="check-item done">
+        <div class="check-box"><span class="check-box-tick">✓</span></div>
+        <span class="check-text">Validate model on real camera feed — verify live piece detection</span>
         <span class="check-tag">Vision</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Label dataset in Roboflow and fine-tune YOLOv8 model</span>
+        <span class="check-text">Map piece detections to board squares (a1–h8) using homography</span>
         <span class="check-tag">Vision</span>
       </div>
       <div class="check-item">
         <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Detect all piece types and map detections to board squares (a1–h8)</span>
-        <span class="check-tag">Vision</span>
-      </div>
-      <div class="check-item">
-        <div class="check-box"><span class="check-box-tick">✓</span></div>
-        <span class="check-text">Wrap YOLO board state tracker as a ROS 2 node</span>
+        <span class="check-text">Wrap YOLO board state tracker as a ROS 2 node publishing to /board_state</span>
         <span class="check-tag">Software</span>
       </div>
       <div class="check-item">
@@ -445,7 +394,7 @@
       <div class="skill-card">
         <div class="skill-icon">// Computer Vision</div>
         <div class="skill-name">Object Detection</div>
-        <p class="skill-desc">Training and deploying a fine-tuned YOLOv8 model to detect chess pieces and track full board state in real time, mapping piece positions to robot workspace coordinates.</p>
+        <p class="skill-desc">Fine-tuning a YOLOv8 model on a chess piece dataset to achieve 98.2% mAP50, then deploying it to track full board state in real time and map piece positions to robot workspace coordinates.</p>
         <div class="tags"><span class="tag">YOLOv8</span><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Roboflow</span></div>
       </div>
 
