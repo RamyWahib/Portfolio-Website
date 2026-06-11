@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WATonomous — Ramy Wahib</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1c1c1c;
+    --bg-soft: #242424;
+    --fg: #e8edf2;
+    --fg-dim: #7c828a;
+    --fg-dimmer: #3d4148;
+    --rust: #22d3ee;
+    --rust-bright: #67e8f9;
+    --rust-soft: rgba(34, 211, 238, 0.12);
+    --rust-glow: rgba(103, 232, 249, 0.4);
+    --line: rgba(220, 235, 245, 0.08);
+    --card: rgba(28, 28, 28, 0.8);
+    --border-card: rgba(220, 235, 245, 0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 10% 15%, rgba(34, 211, 238, 0.08), transparent 50%),
+      radial-gradient(ellipse at 90% 85%, rgba(34, 211, 238, 0.05), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--rust); }
+
+  .corner {
+    position: fixed;
+    width: 20px; height: 20px;
+    border-color: var(--fg-dimmer);
+    z-index: 3;
+  }
+  .corner.tl { top: 16px; left: 16px; border-top: 1px solid; border-left: 1px solid; }
+  .corner.tr { top: 16px; right: 16px; border-top: 1px solid; border-right: 1px solid; }
+  .corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid; border-left: 1px solid; }
+  .corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid; border-right: 1px solid; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.05em;
+    background: rgba(28, 28, 28, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  nav .system-id { display: flex; align-items: center; gap: 10px; }
+  nav .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--rust); box-shadow: 0 0 12px var(--rust-glow);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  nav a.back {
+    color: var(--fg-dim); text-decoration: none;
+    letter-spacing: 0.08em; transition: color 0.2s;
+  }
+  nav a.back:hover { color: var(--rust-bright); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 140px 64px 80px;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; right: -1rem;
+    transform: translateY(-50%);
+    font-family: 'Russo One', sans-serif;
+    font-weight: 400;
+    font-size: clamp(8rem, 20vw, 22rem);
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.025);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+  }
+  .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--rust-bright); }
+
+  .hero h1 {
+    font-family: 'Russo One', sans-serif;
+    font-weight: 400;
+    font-size: clamp(4rem, 12vw, 11rem);
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .hero h1 .accent { color: var(--rust-bright); text-shadow: 0 0 40px var(--rust-glow); }
+
+  .hero-meta {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    position: relative;
+  }
+
+  .meta-item {
+    padding: 20px 32px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .meta-val {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .meta-val a { color: var(--rust-bright); text-decoration: none; }
+  .meta-val a:hover { text-decoration: underline; }
+
+  /* ── SECTIONS ── */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 72px 64px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  /* ── ROLE SECTION ── */
+  .role-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .role-overview p {
+    font-size: 15px;
+    color: var(--fg-dim);
+    line-height: 1.85;
+    margin-bottom: 14px;
+  }
+  .role-overview p:last-child { margin-bottom: 0; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 32px;
+  }
+
+  .stat-cell {
+    background: var(--card);
+    padding: 24px;
+  }
+
+  .stat-num {
+    font-family: 'Russo One', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--rust-bright);
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+    text-shadow: 0 0 20px var(--rust-glow);
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-dimmer);
+  }
+
+  .role-block {
+    border: 1px solid var(--border-card);
+    background: var(--card);
+    backdrop-filter: blur(10px);
+  }
+
+  .role-header {
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .role-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .role-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+    border: 1px solid rgba(103, 232, 249, 0.3);
+    padding: 3px 10px;
+    background: var(--rust-soft);
+  }
+
+  .role-body { padding: 28px; }
+
+  .responsibilities {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .responsibilities li {
+    font-size: 14px;
+    color: var(--fg-dim);
+    line-height: 1.65;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .responsibilities li::before {
+    content: '→';
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--rust-bright);
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    color: var(--rust);
+    background: rgba(34, 211, 238, 0.06);
+  }
+
+  /* ── SLIDER ── */
+  .slider { position: relative; overflow: hidden; border: 1px solid var(--line); background: var(--bg-soft); }
+  .slider-track { display: flex; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+  .slide { flex: 0 0 100%; position: relative; min-width: 0; }
+  .slide img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .slide video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+  .slide-placeholder { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; opacity: 0.3; border: 1px dashed var(--fg-dimmer); }
+  .slide-placeholder p { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--fg-dimmer); letter-spacing: 0.12em; text-transform: uppercase; text-align: center; padding: 0 2rem; }
+  .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px; background: linear-gradient(to top, rgba(28,28,28,0.92), rgba(28,28,28,0.4) 70%, transparent); font-family: 'Space Mono', monospace; font-size: 10px; color: var(--fg); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .slide:hover .slide-caption { opacity: 1; }
+  .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; background: rgba(28,28,28,0.75); border: 1px solid var(--line); color: var(--fg-dim); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, color 0.2s, background 0.2s; z-index: 2; backdrop-filter: blur(4px); }
+  .slider-btn:hover { border-color: var(--rust-bright); color: var(--rust-bright); background: rgba(28,28,28,0.95); }
+  .slider-btn--prev { left: 16px; }
+  .slider-btn--next { right: 16px; }
+  .slider-counter { position: absolute; bottom: 14px; right: 16px; font-family: 'Space Mono', monospace; font-size: 9px; color: var(--fg-dimmer); letter-spacing: 0.15em; background: rgba(28,28,28,0.7); padding: 3px 8px; z-index: 2; backdrop-filter: blur(4px); }
+  .slider[data-single] .slider-btn { display: none; }
+
+  /* ── TASKS ── */
+  .tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+
+  .task-card {
+    border: 1px solid var(--line);
+    background: var(--card);
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.3s;
+  }
+
+  .task-card:hover { border-color: rgba(34, 211, 238, 0.25); }
+
+  .task-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--fg-dimmer);
+    text-transform: uppercase;
+  }
+
+  .task-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  .task-body {
+    font-size: 13px;
+    color: var(--fg-dim);
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.96);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    backdrop-filter: blur(4px);
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border: 1px solid var(--line);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 24px; right: 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-dim);
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+  }
+  .lightbox-close:hover { color: var(--rust-bright); }
+
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 20px 32px 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.08em;
+  }
+  footer .blink { animation: blink 1.2s steps(2) infinite; color: var(--rust-bright); }
+  @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+  .reveal { transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.pre { opacity: 0; transform: translateY(18px); }
+  .reveal.on { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .hero { padding: 120px 24px 60px; }
+    .section { padding: 56px 24px; }
+    .role-grid { grid-template-columns: 1fr; gap: 32px; }
+    .gallery { grid-template-columns: 1fr; }
+    .gallery-item.wide { grid-column: span 1; }
+    .tasks-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: clamp(3.5rem, 15vw, 7rem); }
+    .hero-bg-text { display: none; }
+    .meta-item { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<nav>
+  <div class="system-id">
+    <span class="dot"></span>
+    <span>RW.SYS // WATONOMOUS</span>
+  </div>
+  <a href="../experience.html" class="back">← EXPERIENCE</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg-text">WAT</div>
+  <div class="hero-eyebrow">Active Role — Jan 2026 – Present</div>
+  <h1>WAT<span class="accent">onomous</span></h1>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="meta-label">Team</div>
+      <div class="meta-val"><a href="https://watonomous.ca" target="_blank" rel="noopener">watonomous.ca ↗</a></div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">My Role</div>
+      <div class="meta-val">Robotics Engineer</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Subteam</div>
+      <div class="meta-val">Autonomy Software</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Stack</div>
+      <div class="meta-val">C++ · ROS2 · STM32 · CAN Bus</div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 — ROLE -->
+<div class="section">
+  <div class="section-label">// 01 — My Role</div>
+  <div class="role-grid">
+    <div class="role-overview reveal">
+      <p>WATonomous is the University of Waterloo's student autonomous robots design team. I joined in January 2026 as a Robotics Engineer, working on software, firmware, and hardware for a full humanoid robot.</p>
+      <p>My work spans the full stack — from low-level CAN bus firmware on STM32 microcontrollers, to ROS2 motion control nodes and joint state representation systems running on Linux. Beyond software and firmware, I also contribute to mechanical assembly and electrical wiring of the robot.</p>
+      <div class="stat-grid">
+        <div class="stat-cell">
+          <span class="stat-num">15+</span>
+          <span class="stat-label">DOF Humanoid</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">CAN</span>
+          <span class="stat-label">Bus Protocol</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">STM32</span>
+          <span class="stat-label">MCU Platform</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">ROS2</span>
+          <span class="stat-label">Middleware</span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="role-block">
+        <div class="role-header">
+          <div class="role-title">Robotics Engineer</div>
+          <div class="role-badge">● Active</div>
+        </div>
+        <div class="role-body">
+          <ul class="responsibilities">
+            <li>Developing CAN bus firmware for STM32 microcontrollers to interface with humanoid robot joints</li>
+            <li>Building joint state representation and feedback systems in ROS2 C++</li>
+            <li>Writing and testing motion control nodes for autonomous humanoid operation</li>
+            <li>Collaborating with hardware and electrical subteams on system integration</li>
+            <li>Designing, building, and testing the power distribution system for the humanoid</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">C++</span>
+            <span class="tag">ROS2</span>
+            <span class="tag">STM32</span>
+            <span class="tag">CAN Bus</span>
+            <span class="tag">Embedded</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Mechanical</span>
+            <span class="tag">Electrical</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 — GALLERY -->
+<div class="section">
+  <p style="font-family:'Space Mono',monospace; font-size:11px; color:var(--fg-dim); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:32px; padding: 0 0 16px; border-bottom: 1px solid var(--line);">// Things I've personally worked on</p>
+  <div class="section-label">// 02 — Gallery</div>
+
+  <!--
+    HOW TO ADD MEDIA — add a new <div class="slide"> inside .slider-track:
+
+    Photo:
+    <div class="slide">
+      <img src="../media/your-photo.jpg" alt="Description">
+      <div class="slide-caption">Brief caption here</div>
+    </div>
+
+    Video:
+    <div class="slide">
+      <video controls><source src="../media/your-video.mp4" type="video/mp4"></video>
+      <div class="slide-caption">Brief caption here</div>
+    </div>
+
+    The counter and arrows update automatically. No other changes needed.
+  -->
+
+  <div class="slider reveal">
+    <div class="slider-track">
+      <div class="slide">
+      <video controls><source src="../media/PCA.webm" type="video/mp4"></video>
+      <div class="slide-caption">Compressed 15DOF hand to 7DOF using Geometric Fabrics and PCA in IsaacSim</div>
+    </div>
+    </div>
+    <button class="slider-btn slider-btn--prev" aria-label="Previous">←</button>
+    <button class="slider-btn slider-btn--next" aria-label="Next">→</button>
+    <div class="slider-counter">01 / 01</div>
+  </div>
+</div>
+
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer>© 2026 · RAMYWAHIB.COM · READY<span class="blink">_</span></footer>
+
+<script>
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-img').src = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  document.querySelectorAll('.slider').forEach(function(slider) {
+    var track = slider.querySelector('.slider-track');
+    var slides = Array.from(track.querySelectorAll('.slide'));
+    var counter = slider.querySelector('.slider-counter');
+    if (slides.length <= 1) slider.setAttribute('data-single', '');
+    var cur = 0;
+    function go(dir) {
+      cur = (cur + dir + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      if (counter) counter.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    }
+    slider.querySelector('.slider-btn--prev').addEventListener('click', function() { go(-1); });
+    slider.querySelector('.slider-btn--next').addEventListener('click', function() { go(1); });
+  });
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('on'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('pre');
+    obs.observe(el);
+  });
+</script>
+
+</body>
+</html>

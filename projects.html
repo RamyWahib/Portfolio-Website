@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Projects — Ramy Wahib</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1c1c1c;
+    --bg-soft: #242424;
+    --fg: #e8edf2;
+    --fg-dim: #7c828a;
+    --fg-dimmer: #3d4148;
+    --rust: #f97316;
+    --rust-bright: #fb923c;
+    --rust-soft: rgba(249, 115, 22, 0.12);
+    --rust-glow: rgba(249, 115, 22, 0.4);
+    --line: rgba(220, 235, 245, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 25%, rgba(249, 115, 22, 0.07), transparent 55%),
+      radial-gradient(ellipse at 85% 75%, rgba(249, 115, 22, 0.04), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--rust); }
+
+  .corner {
+    position: fixed;
+    width: 20px; height: 20px;
+    border-color: var(--fg-dimmer);
+    z-index: 3;
+  }
+  .corner.tl { top: 16px; left: 16px; border-top: 1px solid; border-left: 1px solid; }
+  .corner.tr { top: 16px; right: 16px; border-top: 1px solid; border-right: 1px solid; }
+  .corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid; border-left: 1px solid; }
+  .corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid; border-right: 1px solid; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.05em;
+    background: rgba(28, 28, 28, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  nav .system-id { display: flex; align-items: center; gap: 10px; }
+  nav .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--rust); box-shadow: 0 0 12px var(--rust-glow);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  nav a.back {
+    color: var(--fg-dim); text-decoration: none;
+    letter-spacing: 0.08em; transition: color 0.2s;
+  }
+  nav a.back:hover { color: var(--rust-bright); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 130px 32px 100px;
+  }
+
+  .page-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .page-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--rust-bright); }
+
+  .page-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  .page-title .accent { color: var(--rust-bright); text-shadow: 0 0 28px var(--rust-glow); }
+
+  .page-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.12em;
+    margin-bottom: 56px;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    background: rgba(28, 28, 28, 0.7);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--fg);
+    transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card:hover {
+    border-color: var(--rust);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(249, 115, 22, 0.15);
+    z-index: 2;
+  }
+
+  /* top glow line on hover */
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rust-bright), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .card:hover::after { opacity: 1; }
+
+  /* ── THUMBNAIL ── */
+  .card-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--bg-soft);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card:hover .card-thumb img { transform: scale(1.06); }
+
+  .thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #0d0f12 0%, #1c1c1c 100%);
+  }
+
+  .thumb-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.2em;
+  }
+
+  .thumb-name {
+    font-family: 'Russo One', sans-serif;
+    font-size: 14px;
+    color: var(--fg-dimmer);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* index number overlay on thumb */
+  .thumb-index {
+    position: absolute;
+    top: 12px; left: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: rgba(249, 115, 22, 0.7);
+    letter-spacing: 0.1em;
+    background: rgba(28, 28, 28, 0.7);
+    padding: 3px 7px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ── BODY ── */
+  .card-body {
+    padding: 22px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .card-category {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .card-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    color: var(--fg);
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: var(--fg-dim);
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  /* ── TAGS FOOTER ── */
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 14px 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid rgba(249, 115, 22, 0.18);
+    color: var(--rust);
+    background: rgba(249, 115, 22, 0.05);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .card:hover .tag {
+    border-color: rgba(249, 115, 22, 0.3);
+    background: rgba(249, 115, 22, 0.1);
+  }
+
+  /* ── FEATURED CARD (The Hand) ── */
+  .featured-card {
+    display: block;
+    text-decoration: none;
+    color: var(--fg);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: rgba(28, 28, 28, 0.7);
+    backdrop-filter: blur(12px);
+    transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .featured-card:hover {
+    border-color: var(--rust);
+    box-shadow: 0 0 0 1px var(--rust), 0 20px 60px rgba(249, 115, 22, 0.18);
+    transform: translateY(-3px);
+  }
+
+  .featured-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgba(249, 115, 22, 0.05) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.7s ease;
+  }
+  .featured-card:hover::before { transform: translateX(100%); }
+
+  .featured-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rust-bright), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .featured-card:hover::after { opacity: 1; }
+
+  .featured-inner {
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .featured-left { display: flex; flex-direction: column; gap: 16px; }
+
+  .featured-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .featured-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .featured-status {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    background: rgba(249, 115, 22, 0.08);
+    padding: 3px 10px;
+  }
+
+  .featured-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(36px, 5vw, 60px);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  .featured-title .accent { color: var(--rust-bright); text-shadow: 0 0 24px var(--rust-glow); }
+
+  .featured-desc {
+    font-size: 14px;
+    color: var(--fg-dim);
+    line-height: 1.75;
+    max-width: 560px;
+  }
+
+  .featured-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .featured-arrow {
+    width: 56px; height: 56px;
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rust-bright);
+    font-size: 22px;
+    transition: border-color 0.3s, background 0.3s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .featured-card:hover .featured-arrow {
+    border-color: var(--rust-bright);
+    background: var(--rust-soft);
+    transform: translate(3px, -3px);
+  }
+
+  .featured-hint {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .featured-card:hover .featured-hint { opacity: 1; }
+
+  .featured-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 20px 48px;
+    border-top: 1px solid var(--line);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-rule {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .section-rule-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+    white-space: nowrap;
+  }
+  .section-rule-line { flex: 1; height: 1px; background: var(--line); }
+
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 20px 32px 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.08em;
+  }
+  footer .blink { animation: blink 1.2s steps(2) infinite; color: var(--rust-bright); }
+  @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+  @media (max-width: 960px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 700px) {
+    .featured-inner { grid-template-columns: 1fr; padding: 28px 24px; }
+    .featured-tags { padding: 16px 24px; }
+    .featured-cta { flex-direction: row; align-items: center; }
+    .featured-hint { opacity: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    main { padding: 100px 20px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<nav>
+  <div class="system-id">
+    <span class="dot"></span>
+    <span>RW.SYS // BUILDS</span>
+  </div>
+  <a href="index.html" class="back">← HOME</a>
+</nav>
+
+<main>
+  <div class="page-eyebrow">02 · Builds</div>
+  <h1 class="page-title">PRO<span class="accent">JECTS</span></h1>
+
+  <div class="section-rule" style="margin-bottom:20px;margin-top:48px">
+    <span class="section-rule-label">06 Entries · Sorted by Complexity</span>
+    <span class="section-rule-line"></span>
+  </div>
+
+  <div class="grid">
+
+    <a href="pages/robot-racer.html" class="card">
+      <div class="card-thumb">
+        <img src="media/ROBOT-RACER-THUMB.webp" alt="Robot Racer"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><div class=\'thumb-num\'>001</div><div class=\'thumb-name\'>Robot Racer</div></div>'">
+        <div class="thumb-index">001</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Autonomous Navigation</div>
+        <div class="card-title">Robot Racer</div>
+        <div class="card-desc">Autonomous navigation for a LiDAR-equipped robot. A* pathfinding and Pure Pursuit control in C++. Deployed via ROS2 and Docker, simulated in Foxglove.</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag">C++</span>
+        <span class="tag">ROS2</span>
+        <span class="tag">LiDAR</span>
+        <span class="tag">Docker</span>
+        <span class="tag">A*</span>
+      </div>
+    </a>
+
+    <a href="pages/tkom-robot.html" class="card">
+      <div class="card-thumb">
+        <img src="media/TKOM_Top.webp" alt="TKOM Robot"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><div class=\'thumb-num\'>002</div><div class=\'thumb-name\'>TKOM Robot</div></div>'">
+        <div class="thumb-index">002</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Hardware + Software</div>
+        <div class="card-title">TKOM Robot</div>
+        <div class="card-desc">Robot that converts user-drawn maps into a personalised video game. Gravity physics and linear algebra in C++. Hardware designed in SolidWorks, printed on Bambu P1S.</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag">C++</span>
+        <span class="tag">SolidWorks</span>
+        <span class="tag">3D Print</span>
+        <span class="tag">Physics</span>
+      </div>
+    </a>
+
+    <a href="pages/cnn-scraper.html" class="card">
+      <div class="card-thumb">
+        <img src="media/CNN-THUMB.webp" alt="CNN Scraper"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><div class=\'thumb-num\'>003</div><div class=\'thumb-name\'>CNN Scraper</div></div>'">
+        <div class="thumb-index">003</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">ML + Data Pipeline</div>
+        <div class="card-title">CNN Headline Scraper</div>
+        <div class="card-desc">Python pipeline scraping CNN headlines to identify emerging trends. TF-IDF and logistic regression for classification. Statistical analysis in MATLAB — 79% accuracy.</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag">Python</span>
+        <span class="tag">TF-IDF</span>
+        <span class="tag">MATLAB</span>
+        <span class="tag">ML</span>
+      </div>
+    </a>
+
+    <a href="pages/arm-simulator.html" class="card">
+      <div class="card-thumb">
+        <img src="media/2D-ARM-SIM-THUMB.webp" alt="Arm Simulator"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><div class=\'thumb-num\'>004</div><div class=\'thumb-name\'>Arm Sim</div></div>'">
+        <div class="thumb-index">004</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Simulation</div>
+        <div class="card-title">Robotic Arm Simulator</div>
+        <div class="card-desc">Python app simulating forward and inverse kinematics for arbitrary arm configurations. NumPy for linear algebra, PyGame for real-time visualisation. Cut testing time by 91%.</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag">Python</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">PyGame</span>
+        <span class="tag">Kinematics</span>
+      </div>
+    </a>
+
+    <a href="pages/faucet-grip.html" class="card">
+      <div class="card-thumb">
+        <img src="media/FAUCET-THUMB.webp" alt="Faucet Grip"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><div class=\'thumb-num\'>005</div><div class=\'thumb-name\'>Faucet Grip</div></div>'">
+        <div class="thumb-index">005</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Hardware Design</div>
+        <div class="card-title">Outdoor Faucet Grip</div>
+        <div class="card-desc">Custom ergonomic grip attachment for outdoor water faucets, designed for accessibility and ease of use. Modelled in CAD and fabricated via 3D printing.</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag">CAD</span>
+        <span class="tag">3D Print</span>
+        <span class="tag">Product Design</span>
+      </div>
+    </a>
+
+    <a href="pages/goots.html" class="card">
+      <div class="card-thumb">
+        <img src="media/goots1.webp" alt="GOOTS Goose Boots"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><div class=\'thumb-num\'>006</div><div class=\'thumb-name\'>GOOTS</div></div>'">
+        <div class="thumb-index">006</div>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Wearable Prototype</div>
+        <div class="card-title">GOOTS (Goose Boots)</div>
+        <div class="card-desc">Wearable boot prototypes engineered for the geese of UW campus. Merges biomechanics, material selection, and rapid prototyping into an unlikely challenge.</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag">Prototyping</span>
+        <span class="tag">Materials</span>
+        <span class="tag">CAD</span>
+        <span class="tag">Biomechanics</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-rule" style="margin-bottom:20px;margin-top:48px">
+    <span class="section-rule-label">Current Build</span>
+    <span class="section-rule-line"></span>
+  </div>
+
+  <a href="pages/the-hand.html" class="featured-card">
+    <div class="featured-inner">
+      <div class="featured-left">
+        <div class="featured-meta">
+          <span class="featured-eyebrow">Personal Project</span>
+          <span class="featured-status">● In Progress</span>
+        </div>
+        <div class="featured-title">THE <span class="accent">HAND</span></div>
+        <div class="featured-desc">An autonomous 6DOF robotic arm that lets people with motor disabilities play physical chess through voice control and computer vision — fully hands-free. Built from scratch: SolidWorks CAD, custom PCB in Altium, micro-ROS firmware on ESP32, YOLOv8 board tracking, and OpenAI Whisper voice input.</div>
+      </div>
+      <div class="featured-cta">
+        <div class="featured-arrow">→</div>
+        <span class="featured-hint">View Build</span>
+      </div>
+    </div>
+    <div class="featured-tags">
+      <span class="tag">ROS2</span>
+      <span class="tag">MoveIt</span>
+      <span class="tag">YOLOv8</span>
+      <span class="tag">Whisper</span>
+      <span class="tag">ESP32</span>
+      <span class="tag">Altium</span>
+      <span class="tag">SolidWorks</span>
+      <span class="tag">micro-ROS</span>
+      <span class="tag">Python</span>
+      <span class="tag">C++</span>
+    </div>
+  </a>
+
+</main>
+
+<footer>© 2026 · RAMYWAHIB.COM · READY<span class="blink">_</span></footer>
+
+</body>
+</html>

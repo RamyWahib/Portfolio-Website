@@ -1,1290 +1,595 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ramy Wahib — Mechatronics Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="icon" type="image/png" href="media/favicon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ramy Wahib — Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1c1c1c;
+    --bg-soft: #242424;
+    --fg: #e8edf2;
+    --fg-dim: #7c828a;
+    --fg-dimmer: #3d4148;
+    --rust: #f97316;
+    --rust-bright: #fb923c;
+    --rust-soft: rgba(249, 115, 22, 0.18);
+    --rust-glow: rgba(249, 115, 22, 0.4);
+    --grid: rgba(220, 235, 245, 0.035);
+    --line: rgba(220, 235, 245, 0.08);
+  }
 
-    :root {
-      --bg: #080808;
-      --surface: #0f0f0f;
-      --card: #121212;
-      --border: #1e1e1e;
-      --orange: #06b6d4;
-      --orange-dim: rgba(6,182,212,0.12);
-      --orange-glow: rgba(6,182,212,0.06);
-      --text: #f2ede8;
-      --muted: #5a5650;
-      --sub: #9a9490;
-    }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Rajdhani', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 400;
-      overflow-x: hidden;
-    }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(249, 115, 22, 0.06), transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(249, 115, 22, 0.04), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--orange); }
+  body::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(249, 115, 22, 0.14), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 4rem;
-      height: 60px;
-      background: rgba(8,8,8,0.95);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(16px);
-    }
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 3px,
+      rgba(220, 235, 245, 0.012) 3px,
+      rgba(220, 235, 245, 0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
+  }
 
-    .logo {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--text);
-    }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.2s forwards;
+  }
 
-    .logo span { color: var(--orange); }
+  nav .system-id { display: flex; align-items: center; gap: 10px; }
 
-    .nav-center {
-      display: flex;
-      gap: 0.25rem;
-    }
+  nav .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--rust);
+    box-shadow: 0 0 12px var(--rust-glow);
+    animation: pulse 2s ease-in-out infinite;
+  }
 
-    .nav-center a {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      padding: 0.4rem 1rem;
-      transition: color 0.2s, background 0.2s;
-    }
+  nav .timestamp { color: var(--fg-dimmer); }
 
-    .nav-center a:hover {
-      color: var(--orange);
-      background: var(--orange-glow);
-    }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
 
-    .nav-hire {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--bg);
-      background: var(--orange);
-      padding: 0.5rem 1.2rem;
-      text-decoration: none;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-      transition: opacity 0.2s;
-    }
+  .corner {
+    position: fixed;
+    width: 20px; height: 20px;
+    border-color: var(--fg-dimmer);
+    z-index: 3;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.4s forwards;
+  }
+  .corner.tl { top: 16px; left: 16px; border-top: 1px solid; border-left: 1px solid; }
+  .corner.tr { top: 16px; right: 16px; border-top: 1px solid; border-right: 1px solid; }
+  .corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid; border-left: 1px solid; }
+  .corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid; border-right: 1px solid; }
 
-    .nav-hire:hover { opacity: 0.85; }
+  .stage {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+  }
 
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 120px 4rem 4rem;
+  .connectors {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .connector-line {
+    stroke: var(--line);
+    stroke-width: 1;
+    fill: none;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: drawLine 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .connector-line.l1 { animation-delay: 1.2s; }
+  .connector-line.l2 { animation-delay: 1.4s; }
+  .connector-line.l3 { animation-delay: 1.6s; }
+
+  @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+  .connector-pulse {
+    fill: var(--rust-bright);
+    opacity: 0;
+    animation: travelPulse 3.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 4px var(--rust-glow));
+  }
+
+  .connector-pulse.p1 { animation-delay: 2.4s; }
+  .connector-pulse.p2 { animation-delay: 2.9s; }
+  .connector-pulse.p3 { animation-delay: 3.4s; }
+
+  @keyframes travelPulse {
+    0% { opacity: 0; offset-distance: 0%; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; offset-distance: 100%; }
+  }
+
+  .hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    animation: hubIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+  }
+
+  @keyframes hubIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .portrait-wrap {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin-bottom: 28px;
+  }
+
+  .portrait-ring {
+    position: absolute;
+    inset: -16px;
+    border: 1px dashed var(--line);
+    border-radius: 50%;
+    animation: spin 40s linear infinite;
+  }
+
+  .portrait-ring::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7px;
+    height: 7px;
+    background: var(--rust-bright);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--rust-glow);
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .portrait {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+    position: relative;
+    box-shadow: 0 0 50px rgba(249, 115, 22, 0.25);
+  }
+
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .portrait .placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #161a1f 0%, #0b0d10 100%);
+    color: var(--fg-dim);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .placeholder svg {
+    width: 60px;
+    height: 60px;
+    opacity: 0.4;
+  }
+
+  .hub-name {
+    font-family: 'Russo One', sans-serif;
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .hub-name .accent {
+    font-family: 'Russo One', sans-serif;
+    color: var(--rust-bright);
+    font-weight: 400;
+    text-shadow: 0 0 24px var(--rust-glow);
+  }
+
+  .hub-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    max-width: 320px;
+    line-height: 1.7;
+  }
+
+  .hub-desc .sep {
+    color: var(--rust-bright);
+    margin: 0 8px;
+  }
+
+  .branch {
+    position: absolute;
+    z-index: 5;
+    opacity: 0;
+  }
+
+  /* UPSIDE-DOWN TRIANGLE: two buttons at top, one at bottom */
+  .branch.b1 {
+    /* top-left */
+    top: 15%;
+    left: 18%;
+    animation: branchIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards;
+  }
+
+  .branch.b2 {
+    /* top-right */
+    top: 15%;
+    right: 18%;
+    animation: branchIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 2.0s forwards;
+  }
+
+  .branch.b3 {
+    /* bottom-center (point of the inverted triangle) */
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: branchInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) 2.2s forwards;
+  }
+
+  @keyframes branchIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes branchInBottom {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  .branch-btn {
+    display: block;
+    text-decoration: none;
+    color: var(--fg);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .branch-node {
+    position: relative;
+    padding: 20px 32px;
+    border: 1px solid var(--line);
+    background: rgba(30, 30, 30, 0.6);
+    /* backdrop-filter: blur(10px); */
+    min-width: 220px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  .branch-node::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--rust-soft), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .branch-btn:hover .branch-node {
+    border-color: var(--rust);
+    background: rgba(30, 30, 30, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.2);
+  }
+
+  .branch-btn:hover .branch-node::before { left: 100%; }
+
+  .branch-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.15em;
+    margin-bottom: 6px;
+  }
+
+  .branch-title {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .branch-title .arrow {
+    display: inline-block;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--rust-bright);
+  }
+
+  .branch-btn:hover .branch-title .arrow { transform: translateX(4px); }
+
+  footer {
+    position: fixed;
+    bottom: 24px;
+    left: 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.08em;
+    z-index: 3;
+    opacity: 0;
+    animation: fadeIn 1s ease 2.6s forwards;
+    white-space: nowrap;
+  }
+
+  footer .blink {
+    animation: blink 1.2s steps(2) infinite;
+    color: var(--rust-bright);
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (max-width: 900px) {
+    html, body { overflow-y: auto; height: auto; min-height: 100vh; }
+    .stage { height: auto; min-height: 100vh; padding: 100px 20px 80px; }
+    .connectors { display: none; }
+    .hub {
       position: relative;
-      border-bottom: 1px solid var(--border);
+      top: auto;
+      left: auto;
+      transform: none;
+      margin: 0 auto 48px;
+      animation: fadeIn 0.8s ease 0.6s forwards;
     }
-
-    .hero-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .hero-label::before {
-      content: '';
-      display: inline-block;
-      width: 24px;
-      height: 1px;
-      background: var(--orange);
-    }
-
-    .hero-name {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 800;
-      font-size: clamp(4.5rem, 13vw, 12rem);
-      line-height: 0.9;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      margin-bottom: 4rem;
-    }
-
-    .hero-name .line2 {
-      color: var(--orange);
-      display: block;
-    }
-
-    .hero-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 2px;
-      border-top: 1px solid var(--border);
-      padding-top: 2rem;
-    }
-
-    .hero-col {
-      padding-right: 2rem;
-    }
-
-    .hero-col-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.6rem;
-    }
-
-    .hero-col-val {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.95rem;
-      color: var(--sub);
-      line-height: 1.6;
-      font-weight: 400;
-    }
-
-    .hero-col-val strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    /* ── SECTION WRAPPER ── */
-    .section-wrap {
-      padding: 7rem 4rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section-top {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      margin-bottom: 4rem;
-    }
-
-    .section-index {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--orange);
-      letter-spacing: 0.15em;
-      opacity: 0.7;
-    }
-
-    .section-title {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 700;
-      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text);
-    }
-
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── EXPERIENCE ── */
-    .exp-item {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 0;
-      gap: 3rem;
-    }
-
-    .exp-item:last-child { border-bottom: 1px solid var(--border); }
-
-    .exp-meta { padding-top: 0.2rem; }
-
-    .exp-date {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--orange);
-      letter-spacing: 0.08em;
-      margin-bottom: 0.5rem;
-    }
-
-    .exp-org {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .exp-title {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 700;
-      font-size: 1.4rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 1.2rem;
-    }
-
-    .exp-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-    }
-
-    .exp-list li {
-      font-size: 0.95rem;
-      color: var(--sub);
-      padding-left: 1.5rem;
-      position: relative;
-      line-height: 1.6;
-      font-weight: 400;
-    }
-
-    .exp-list li::before {
-      content: '›';
-      position: absolute;
-      left: 0;
-      color: var(--orange);
-      font-size: 1rem;
-    }
-
-    /* ── PROJECTS ── */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-
-    .proj-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s, transform 0.2s;
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .proj-card:hover { border-color: var(--orange); transform: translateY(-3px); }
-
-    .proj-thumb {
+    .portrait-wrap { width: 140px; height: 140px; }
+    .hub-name { font-size: 34px; }
+    .branch {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      transform: none !important;
+      margin: 0 auto 16px;
       width: 100%;
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-      background: #0d0d0d;
-    }
-
-    .proj-thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      transition: transform 0.4s ease;
-    }
-
-    .proj-card:hover .proj-thumb img { transform: scale(1.04); }
-
-    .proj-thumb-placeholder {
-      width: 100%; height: 100%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .proj-thumb-placeholder .ph-num {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem; letter-spacing: 0.2em; color: #1e1e1e;
-    }
-
-    .proj-thumb-placeholder .ph-name {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 800; font-size: clamp(1rem, 3vw, 2rem);
-      text-transform: uppercase; letter-spacing: 0.08em; color: #1a1a1a;
-    }
-
-    .proj-body {
-      padding: 1.6rem 1.8rem 1.8rem;
-      display: flex; flex-direction: column; flex: 1;
-    }
-
-    .proj-num {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.58rem;
-      color: var(--muted);
-      letter-spacing: 0.15em;
-      margin-bottom: 0.5rem;
-    }
-
-    .proj-name {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.25rem;
-      line-height: 1.2;
-    }
-
-    .proj-period {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      margin-bottom: 0.9rem;
-    }
-
-    .proj-desc {
-      font-size: 0.88rem;
-      color: var(--sub);
-      line-height: 1.65;
-      flex: 1;
-      margin-bottom: 1.4rem;
-      font-weight: 400;
-    }
-
-    .proj-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 1rem;
-    }
-
-    .proj-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-    }
-
-    .tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.06em;
-      padding: 0.2rem 0.5rem;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    .proj-link {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--orange);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      white-space: nowrap;
-      transition: opacity 0.2s;
-    }
-
-    .proj-link:hover { opacity: 0.7; }
-
-    /* ── WATONOMOUS FEATURE ── */
-    .wat-section {
-      padding: 7rem 4rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .wat-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-    }
-
-    .wat-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .wat-label::before {
-      content: '';
-      width: 20px; height: 1px;
-      background: var(--orange);
-    }
-
-    .wat-title {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      text-transform: uppercase;
-      line-height: 0.95;
-      letter-spacing: -0.01em;
-      margin-bottom: 1.5rem;
-    }
-
-    .wat-title span { color: var(--orange); }
-
-    .wat-desc {
-      font-size: 1rem;
-      color: var(--sub);
-      line-height: 1.8;
-      margin-bottom: 2rem;
-    }
-
-    .wat-stats {
-      display: flex;
-      gap: 2.5rem;
-      margin-bottom: 2.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .wat-stat-num {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 800;
-      font-size: 2rem;
-      color: var(--orange);
-      line-height: 1;
-      display: block;
-    }
-
-    .wat-stat-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 0.3rem;
-      display: block;
-    }
-
-    .wat-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #080808;
-      background: var(--orange);
-      padding: 0.85rem 1.6rem;
-      text-decoration: none;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-      transition: opacity 0.2s;
-    }
-
-    .wat-cta:hover { opacity: 0.85; }
-
-    .wat-visual {
-      position: relative;
-      border: 1px solid var(--border);
-      background: var(--card);
-      overflow: hidden;
-    }
-
-    .wat-visual-inner {
-      aspect-ratio: 4/3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding: 3rem;
-      position: relative;
-    }
-
-    .wat-logo-text {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2rem, 5vw, 4rem);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--border);
-    }
-
-    .wat-logo-sub {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .wat-corner {
-      position: absolute;
-      width: 40px; height: 40px;
-      border-color: var(--orange);
-      border-style: solid;
-      opacity: 0.4;
-    }
-
-    .wat-corner.tl { top: 1rem; left: 1rem; border-width: 1px 0 0 1px; }
-    .wat-corner.tr { top: 1rem; right: 1rem; border-width: 1px 1px 0 0; }
-    .wat-corner.bl { bottom: 1rem; left: 1rem; border-width: 0 0 1px 1px; }
-    .wat-corner.br { bottom: 1rem; right: 1rem; border-width: 0 1px 1px 0; }
-
-    .wat-role-tag {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--orange);
-      border: 1px solid rgba(6,182,212,0.3);
-      padding: 0.3rem 0.8rem;
-      background: var(--orange-dim);
-    }
-
-    @media (max-width: 900px) {
-      .wat-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .wat-section { padding: 4rem 1.5rem; }
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .skill-group {
-      background: var(--card);
-      padding: 2rem;
-      transition: background 0.2s;
-    }
-
-    .skill-group:hover { background: #161616; }
-
-    .skill-group-name {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 700;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.8rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .skill-items {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .skill-item {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      color: var(--sub);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 0.4rem 0.85rem;
-      text-transform: uppercase;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-
-    .skill-group:hover .skill-item {
-      border-color: #2a2a2a;
-    }
-
-    .skill-item:hover {
-      border-color: var(--orange) !important;
-      color: var(--orange);
-      background: var(--orange-dim);
-    }
-
-    /* ── EDUCATION ── */
-    .edu-card {
-      border: 1px solid var(--border);
-      background: var(--card);
-      padding: 3rem;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .edu-uni {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 800;
-      font-size: clamp(1.5rem, 3vw, 2.5rem);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.6rem;
-    }
-
-    .edu-program {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1rem;
-      color: var(--sub);
-      margin-bottom: 1.5rem;
-      font-weight: 400;
-    }
-
-    .edu-chips {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .edu-chip {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      padding: 0.35rem 0.9rem;
-      border: 1px solid var(--border);
-      color: var(--sub);
-    }
-
-    .edu-chip.hl {
-      border-color: var(--orange);
-      color: var(--orange);
-      background: var(--orange-dim);
-    }
-
-    .edu-gpa {
-      text-align: right;
-    }
-
-    .edu-gpa-num {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 800;
-      font-size: 4.5rem;
-      color: var(--orange);
-      line-height: 1;
-      letter-spacing: -0.02em;
-    }
-
-    .edu-gpa-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-top: 0.3rem;
-    }
-
-    /* ── CONTACT ── */
-    #contact-section {
-      padding: 7rem 4rem 8rem;
-    }
-
-    .contact-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: start;
-      margin-top: 1rem;
-    }
-
-    .contact-big {
-      font-family: 'Oxanium', sans-serif;
-      font-weight: 800;
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      text-transform: uppercase;
-      line-height: 0.95;
-      letter-spacing: -0.01em;
-      margin-bottom: 2rem;
-    }
-
-    .contact-big .hl { color: var(--orange); display: block; }
-
-    .contact-body {
-      font-size: 1rem;
-      color: var(--sub);
-      line-height: 1.8;
-      font-weight: 400;
-    }
-
-    .contact-list {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--border);
-    }
-
-    /* ── CONTACT FORM ── */
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border: 1px solid var(--border);
-    }
-
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .form-row:last-of-type { border-bottom: none; }
-
-    .form-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 0.8rem 1.2rem 0.3rem;
-    }
-
-    .form-input,
-    .form-textarea {
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--text);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      padding: 0.3rem 1.2rem 0.9rem;
-      width: 100%;
-      resize: none;
-      transition: background 0.15s;
-    }
-
-    .form-row:focus-within {
-      background: var(--orange-glow);
-    }
-
-    .form-row:focus-within .form-label { color: var(--orange); }
-
-    .form-textarea { min-height: 120px; }
-
-    .form-submit {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #080808;
-      background: var(--orange);
-      border: none;
-      padding: 1rem 1.5rem;
-      cursor: pointer;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-      transition: opacity 0.2s;
-      align-self: flex-start;
-      margin-top: 1.2rem;
-    }
-
-    .form-submit:hover { opacity: 0.85; }
-
-    .form-success {
-      display: none;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      color: var(--orange);
-      text-transform: uppercase;
-      margin-top: 1rem;
-    }
-
-    .contact-row {
-      display: grid;
-      grid-template-columns: 90px 1fr 24px;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.3rem 1.5rem;
-      border-bottom: 1px solid var(--border);
-      text-decoration: none;
-      transition: background 0.15s;
-    }
-
-    .contact-row:last-child { border-bottom: none; }
-    .contact-row:hover { background: var(--orange-glow); }
-
-    .contact-row-label {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .contact-row-val {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.95rem;
-      color: var(--text);
-      font-weight: 500;
-      transition: color 0.15s;
-    }
-
-    .contact-row:hover .contact-row-val { color: var(--orange); }
-
-    .contact-row-arrow {
-      color: var(--orange);
-      font-size: 0.75rem;
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-
-    .contact-row:hover .contact-row-arrow { opacity: 1; }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 1.2rem 4rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    footer span {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .footer-langs { display: flex; gap: 0.5rem; }
-
-    .footer-lang {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.1em;
-      padding: 0.2rem 0.6rem;
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    /* ── REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .reveal.on { opacity: 1; transform: none; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      nav { padding: 0 1.5rem; }
-      .nav-center { display: none; }
-      #hero, .section-wrap, #contact-section { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .hero-row { grid-template-columns: 1fr; gap: 1.5rem; }
-      .exp-item { grid-template-columns: 1fr; gap: 1rem; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .proj-card.wide { grid-column: span 1; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .edu-card { grid-template-columns: 1fr; }
-      .edu-gpa { text-align: left; }
-      .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-      footer { flex-direction: column; gap: 0.8rem; padding: 1.2rem 1.5rem; }
-    }
-  </style>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="d9bdbd8f-390d-4e4a-8cba-50ab9d0518ea"></script>
+      max-width: 320px;
+      animation-name: branchIn !important;
+    }
+    .branch-node { width: 100%; }
+    footer { position: relative; bottom: auto; left: auto; margin: 20px auto 0; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a class="logo" href="#hero">RAMY <span>W.</span></a>
-    <div class="nav-center">
-      <a href="#projects">Projects</a>
-      <a href="#the-hand">The Hand</a><a href="#watonomous">WATonomous</a><a href="#skills">Skills</a>
-      <a href="#education">Education</a>
-      <a href="#contact-section">Contact</a>
-    </div>
-    <a class="nav-hire" href="#contact-section">Hire Me</a>
-  </nav>
+<div class="scanlines" style="display:none"></div>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-label">Mechatronics Engineering Student · Co-op Available 2026</div>
-    <div class="hero-name">
-      RAMY<br>
-      <span class="line2">WAHIB.</span>
-    </div>
-    <div class="hero-row">
-      <div class="hero-col">
-        <div class="hero-col-label">Based At</div>
-        <div class="hero-col-val"><strong>University of Waterloo</strong><br>Waterloo, Ontario</div>
-      </div>
-      <div class="hero-col">
-        <div class="hero-col-label">Focus</div>
-        <div class="hero-col-val"><strong>Robotics · Embedded Systems</strong><br>Autonomous Systems</div>
-      </div>
-      <div class="hero-col">
-        <div class="hero-col-label">Languages</div>
-        <div class="hero-col-val"><strong>English · French</strong><br>Arabic</div>
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<nav>
+  <div class="system-id">
+    <span class="dot"></span>
+    <span>RW.SYS // v2026.04</span>
+  </div>
+  <div class="timestamp" id="timestamp">—</div>
+</nav>
+
+<div class="stage">
+  <svg class="connectors" id="connectors" preserveAspectRatio="none"></svg>
+
+  <div class="hub">
+    <div class="portrait-wrap">
+      <div class="portrait-ring"></div>
+      <div class="portrait">
+        <img src="media/selfie.webp" alt="Ramy Wahib" />
       </div>
     </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <div id="projects" class="section-wrap">
-    <div class="section-top reveal">
-      <span class="section-index">// 02</span>
-      <h2 class="section-title">Projects</h2>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="projects-grid">
-
-      <div class="proj-card reveal" onclick="location.href='robot-racer.html'">
-        <div class="proj-thumb">
-          <!-- TO ADD IMAGE: replace the div below with: <img src="YOUR_IMAGE_URL" alt="Robot Racer"> -->
-          <!-- <div class="proj-thumb-placeholder"><div class="ph-num">001</div><div class="ph-name">Robot Racer</div></div> -->
-          <img src="media/ROBOT-RACER-THUMB.png" alt = "Robot Racer">
-        </div>
-        <div class="proj-body">
-          <div class="proj-num">001 — January 2026</div>
-          <div class="proj-name">Self-Driving Car Software</div>
-          <p class="proj-desc">Autonomous navigation for a LiDAR-equipped robot. A* Pathfinding and Pure Pursuit Controls in C++. Deployed via ROS2 and Docker, simulated in Foxglove.</p>
-          <div class="proj-bottom">
-            <div class="proj-tags"><span class="tag">C++</span><span class="tag">ROS2</span><span class="tag">LiDAR</span><span class="tag">Docker</span></div>
-            <a class="proj-link" href="robot-racer.html">VIEW →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="proj-card reveal" onclick="location.href='tkom-robot.html'">
-        <div class="proj-thumb">
-          <!-- TO ADD IMAGE: replace the div below with: <img src="YOUR_IMAGE_URL" alt="TKOM Robot"> -->
-          <!-- <div class="proj-thumb-placeholder"><div class="ph-num">002</div><div class="ph-name">TKOM Robot</div></div> -->
-           <img src="media/TKOM_Top.jpeg" alt="TKOM Robot">
-        </div>
-        <div class="proj-body">
-          <div class="proj-num">002 — Sep – Nov 2025</div>
-          <div class="proj-name">TKOM Robot</div>
-          <p class="proj-desc">Robot that converts user-drawn maps into a personalised video game. Gravity physics and linear algebra in C++. Hardware designed in SolidWorks, printed on Bambu P1S.</p>
-          <div class="proj-bottom">
-            <div class="proj-tags"><span class="tag">C++</span><span class="tag">SolidWorks</span><span class="tag">3D Printing</span></div>
-            <a class="proj-link" href="tkom-robot.html">VIEW →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="proj-card reveal" onclick="location.href='cnn-scraper.html'">
-        <div class="proj-thumb">
-          <!-- TO ADD IMAGE: replace the div below with: <img src="YOUR_IMAGE_URL" alt="CNN Scraper"> -->
-          <!-- <div class="proj-thumb-placeholder"><div class="ph-num">003</div><div class="ph-name">CNN Scraper</div></div> -->
-          <img src="media/CNN-THUMB.png" alt = "CNN Web Scraper">
-        </div>
-        <div class="proj-body">
-          <div class="proj-num">003 — December 2025</div>
-          <div class="proj-name">CNN Headline Scraper</div>
-          <p class="proj-desc">Python pipeline scraping CNN headlines to identify emerging trends. TF-IDF and logistic regression for classification. Statistical analysis in MATLAB — 79% accuracy.</p>
-          <div class="proj-bottom">
-            <div class="proj-tags"><span class="tag">Python</span><span class="tag">TF-IDF</span><span class="tag">MATLAB</span></div>
-            <a class="proj-link" href="cnn-scraper.html">VIEW →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="proj-card reveal" onclick="location.href='arm-simulator.html'">
-        <div class="proj-thumb">
-          <!-- TO ADD IMAGE: replace the div below with: <img src="YOUR_IMAGE_URL" alt="Arm Simulator"> -->
-           <img src="media/2D-ARM-SIM-THUMB.png" alt = "Robotic Arm Simualator">
-          <div class="proj-thumb-placeholder"><div class="ph-num">004</div><div class="ph-name">Arm Simulator</div></div>
-        </div>
-        <div class="proj-body">
-          <div class="proj-num">004 — Jun – Jul 2025</div>
-          <div class="proj-name">Robotic Arm Simulator</div>
-          <p class="proj-desc">Python app simulating forward and inverse kinematics for arbitrary arm configurations. NumPy for linear algebra, PyGame for real-time visualisation. Cut testing time by 91%.</p>
-          <div class="proj-bottom">
-            <div class="proj-tags"><span class="tag">Python</span><span class="tag">NumPy</span><span class="tag">PyGame</span></div>
-            <a class="proj-link" href="arm-simulator.html">VIEW →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="proj-card reveal" onclick="location.href='faucet-grip.html'">
-        <div class="proj-thumb">
-          <!-- TO ADD IMAGE: replace the div below with: <img src="YOUR_IMAGE_URL" alt="Faucet Grip"> -->
-           <img src="media/FAUCET-THUMB.png" alt = "Outdoor Water Faucet Grip">
-          <!--<div class="proj-thumb-placeholder"><div class="ph-num">005</div><div class="ph-name">Faucet Grip</div></div>-->
-        </div>
-        <div class="proj-body">
-          <div class="proj-num">005 — Oct – Dec 2025</div>
-          <div class="proj-name">Outdoor Faucet Grip</div>
-          <p class="proj-desc">3D-printable grip for patients with low grip strength. Designed in SolidWorks, manufactured in HDPE. DFM-driven parametric design reduced required grip strength by 83%.</p>
-          <div class="proj-bottom">
-            <div class="proj-tags"><span class="tag">SolidWorks</span><span class="tag">HDPE</span><span class="tag">DFM</span></div>
-            <a class="proj-link" href="faucet-grip.html">VIEW →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="proj-card reveal" onclick="location.href='goots.html'">
-        <div class="proj-thumb">
-          <img src="media/goots1.png" alt="GOOTS Goose Boots prototype">
-        </div>
-        <div class="proj-body">
-          <div class="proj-num">006 — 2025</div>
-          <div class="proj-name">GOOTS (Goose Boots)</div>
-          <p class="proj-desc">Shoe add-on for people with blindness. Sensor fusion across temperature, FSR, ultrasound, and RGB sensors classifies surroundings into ice, snow, or other materials.</p>
-          <div class="proj-bottom">
-            <div class="proj-tags"><span class="tag">Arduino</span><span class="tag">C++</span><span class="tag">Sensor Fusion</span></div>
-            <a class="proj-link" href="goots.html">VIEW →</a>
-          </div>
-        </div>
-      </div>
-
+    <div class="hub-name">RAMY <span class="accent">WAHIB</span></div>
+    <div class="hub-desc">
+      Mechatronics Eng<span class="sep">·</span>Waterloo<span class="sep">·</span>Building robots that think
     </div>
   </div>
 
-  <!-- THE HAND -->
-  <div id="the-hand" class="wat-section" style="background: var(--surface);">
-    <div class="wat-inner">
-      <div class="wat-visual reveal" style="order: -1;">
-        <div class="wat-visual-inner">
-          <div class="wat-corner tl"></div><div class="wat-corner tr"></div>
-          <div class="wat-corner bl"></div><div class="wat-corner br"></div>
-          <div class="wat-role-tag">In Progress</div>
-          <div class="wat-logo-text" style="font-size: clamp(3rem, 8vw, 6rem); color: #1a1a1a;">HAND</div>
-          <div class="wat-logo-sub">Current Build · 2026</div>
-        </div>
+  <div class="branch b1">
+    <a href="experience.html" class="branch-btn">
+      <div class="branch-node">
+        <div class="branch-label">01 · CAREER</div>
+        <div class="branch-title">Experience <span class="arrow">→</span></div>
       </div>
-      <div class="reveal">
-        <div class="wat-label">// 03 — Current Project</div>
-        <div class="wat-title">The <span>Hand</span></div>
-        <p class="wat-desc">My current personal project — actively in development. Follow along as I document objectives, progress, and everything I'm learning along the way.</p>
-        <div class="wat-stats">
-          <div><span class="wat-stat-num">2026</span><span class="wat-stat-label">Started</span></div>
-          <div><span class="wat-stat-num">WIP</span><span class="wat-stat-label">Status</span></div>
-        </div>
-        <a class="wat-cta" href="the-hand.html">Follow the Build →</a>
-      </div>
-    </div>
+    </a>
   </div>
 
-  <!-- WATONOMOUS -->
-  <div id="watonomous" class="wat-section">
-    <div class="wat-inner">
-      <div class="reveal">
-        <div class="wat-label">// Active Role — Jan 2026 – Present</div>
-        <div class="wat-title">WAT<span>onomous</span></div>
-        <p class="wat-desc">I'm an active member of WATonomous, the University of Waterloo's autonomous robotics design team. I work on software, firmware, and hardware for a fully autonomous robotic arm — developing everything from CAN firmware to joint representation systems.</p>
-        <div class="wat-stats">
-          <div><span class="wat-stat-num">Jan '26</span><span class="wat-stat-label">Joined</span></div>
-          <div><span class="wat-stat-num">STM32</span><span class="wat-stat-label">Primary MCU</span></div>
-          <div><span class="wat-stat-num">ROS2</span><span class="wat-stat-label">Framework</span></div>
-        </div>
-        <a class="wat-cta" href="watonomous.html">See Our Work →</a>
+  <div class="branch b2">
+    <a href="projects.html" class="branch-btn">
+      <div class="branch-node">
+        <div class="branch-label">02 · BUILDS</div>
+        <div class="branch-title">Projects <span class="arrow">→</span></div>
       </div>
-      <div class="wat-visual reveal">
-        <div class="wat-visual-inner">
-          <div class="wat-corner tl"></div><div class="wat-corner tr"></div>
-          <div class="wat-corner bl"></div><div class="wat-corner br"></div>
-          <div class="wat-role-tag">Robotics Engineer</div>
-          <div class="wat-logo-text">WAT</div>
-          <div class="wat-logo-sub">University of Waterloo · Autonomous Systems</div>
-        </div>
-      </div>
-    </div>
+    </a>
   </div>
 
-  <!-- SKILLS -->
-  <div id="skills" class="section-wrap">
-    <div class="section-top reveal">
-      <span class="section-index">// 05</span>
-      <h2 class="section-title">Skills</h2>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="skills-grid">
-      <div class="skill-group reveal">
-        <div class="skill-group-name">Software</div>
-        <div class="skill-items">
-          <span class="skill-item">C++</span>
-          <span class="skill-item">Python</span>
-          <span class="skill-item">Java</span>
-          <span class="skill-item">ROS2</span>
-          <span class="skill-item">Docker</span>
-          <span class="skill-item">OpenCV</span>
-          <span class="skill-item">Git</span>
-          <span class="skill-item">MATLAB</span>
-          <span class="skill-item">Ubuntu</span>
-          <span class="skill-item">HTML / CSS</span>
-        </div>
+  <div class="branch b3">
+    <a href="contact.html" class="branch-btn">
+      <div class="branch-node">
+        <div class="branch-label">03 · REACH OUT</div>
+        <div class="branch-title">Contact <span class="arrow">→</span></div>
       </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-name">Hardware</div>
-        <div class="skill-items">
-          <span class="skill-item">STM32</span>
-          <span class="skill-item">ESP32</span>
-          <span class="skill-item">Arduino</span>
-          <span class="skill-item">PCB Design</span>
-          <span class="skill-item">Altium Designer</span>
-          <span class="skill-item">Soldering</span>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-name">Mechanical</div>
-        <div class="skill-items">
-          <span class="skill-item">SolidWorks</span>
-          <span class="skill-item">AutoCAD</span>
-          <span class="skill-item">3D Printing</span>
-          <span class="skill-item">GD&T</span>
-          <span class="skill-item">DFM Principles</span>
-          <span class="skill-item">Freehand Drawing</span>
-        </div>
-      </div>
-    </div>
+    </a>
   </div>
+</div>
 
-  <!-- EDUCATION -->
-  <div id="education" class="section-wrap">
-    <div class="section-top reveal">
-      <span class="section-index">// 06</span>
-      <h2 class="section-title">Education</h2>
-      <div class="section-line"></div>
-    </div>
+<footer>
+  © 2026 · RAMYWAHIB.COM · READY<span class="blink">_</span>
+</footer>
 
-    <div class="edu-card reveal">
-      <div>
-        <div class="edu-uni">University of Waterloo</div>
-        <div class="edu-program">Honours BASc in Mechatronics Engineering with Co-op</div>
-        <div class="edu-chips">
-          <span class="edu-chip">Sep 2025 – May 2030</span>
-          <span class="edu-chip">Honours Candidate</span>
-          <span class="edu-chip">Co-op Program</span>
-        </div>
-      </div>
-    </div>
-  </div>
+<script>
+  function updateTime() {
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('timestamp').textContent =
+      `${now.getUTCFullYear()}.${pad(now.getUTCMonth()+1)}.${pad(now.getUTCDate())} · ${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())} UTC`;
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
 
-  <!-- CONTACT -->
-  <div id="contact-section">
-    <div class="section-wrap" style="border-bottom: none; padding-bottom: 0;">
-      <div class="section-top reveal">
-        <span class="section-index">// 07</span>
-        <h2 class="section-title">Contact</h2>
-        <div class="section-line"></div>
-      </div>
-    </div>
-    <div style="padding: 2rem 4rem 8rem;">
-      <div class="contact-layout">
+  function drawConnectors() {
+    const svg = document.getElementById('connectors');
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    svg.setAttribute('width', w);
+    svg.setAttribute('height', h);
 
-        <div class="reveal">
-          <div class="contact-big">READY<br>TO<br><span class="hl">BUILD.</span></div>
-          <p class="contact-body">Open to co-op roles in robotics, embedded systems, and autonomous systems. I build things that work — in software, hardware, and everything in between.</p>
-          <div class="contact-list" style="margin-top: 2rem;">
-            
-            <a class="contact-row" href="https://linkedin.com/in/ramywahib" target="_blank">
-              <span class="contact-row-label">LinkedIn</span>
-              <span class="contact-row-val">ramywahib</span>
-              <span class="contact-row-arrow">↗</span>
-            </a>
-            <a class="contact-row" href="https://github.com/RamyWahib" target="_blank">
-              <span class="contact-row-label">GitHub</span>
-              <span class="contact-row-val">RamyWahib</span>
-              <span class="contact-row-arrow">↗</span>
-            </a>
-            
-          </div>
-        </div>
+    if (w <= 900) { svg.innerHTML = ''; return; }
 
-        <div class="reveal">
-          <form class="contact-form" action="https://formspree.io/f/xvzwkpka" method="POST" id="contact-form">
-            <div class="form-row">
-              <label class="form-label" for="name">Your Name</label>
-              <input class="form-input" id="name" name="name" type="text" placeholder="John Smith" required>
-            </div>
-            <div class="form-row">
-              <label class="form-label" for="email">Your Email</label>
-              <input class="form-input" id="email" name="email" type="email" placeholder="john@company.com" required>
-            </div>
-            <div class="form-row">
-              <label class="form-label" for="subject">Subject</label>
-              <input class="form-input" id="subject" name="subject" type="text" placeholder="Co-op Opportunity · Project Collab · Other">
-            </div>
-            <div class="form-row">
-              <label class="form-label" for="message">Message</label>
-              <textarea class="form-textarea" id="message" name="message" placeholder="Tell me about the role or what you're working on..." required></textarea>
-            </div>
-            <button class="form-submit" type="submit">Send Message →</button>
-            <div class="form-success" id="form-success">✓ Message sent — I'll be in touch soon.</div>
-          </form>
-        </div>
+    const hub = document.querySelector('.hub').getBoundingClientRect();
+    const nodes = [
+      document.querySelector('.b1 .branch-node').getBoundingClientRect(),
+      document.querySelector('.b2 .branch-node').getBoundingClientRect(),
+      document.querySelector('.b3 .branch-node').getBoundingClientRect()
+    ];
 
-      </div>
-    </div>
-  </div>
+    // Anchor lines to the bottom of the hub-name (where "RAMY WAHIB" ends)
+    const nameEl = document.querySelector('.hub-name').getBoundingClientRect();
+    const hubX = hub.left + hub.width / 2;
+    const hubY = nameEl.bottom + 4;
+    const hubRadius = 0; // start right at the name baseline
 
-  <footer>
-    <span>© 2026 Ramy Wahib — Mechatronics Engineering</span>
-    <div class="footer-langs">
-      <span class="footer-lang">EN</span>
-      <span class="footer-lang">FR</span>
-    </div>
-  </footer>
-  <script>
-    // Scroll reveal
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('on'), i * 70);
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.07 });
-    document.querySelectorAll('.reveal').forEach(el => {
-      el.classList.add('pre-anim');
-      obs.observe(el);
+    let html = '';
+    nodes.forEach((n, i) => {
+      const nx = n.left + n.width / 2;
+      const ny = n.top + n.height / 2;
+
+      const dx = nx - hubX;
+      const dy = ny - hubY;
+      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+      const ux = dx / dist, uy = dy / dist;
+
+      const sx = hubX;
+      const sy = hubY;
+
+      // where line meets node rectangle
+      const halfW = n.width / 2 + 4;
+      const halfH = n.height / 2 + 4;
+      const tx = halfW / Math.abs(ux || 0.0001);
+      const ty = halfH / Math.abs(uy || 0.0001);
+      const t = Math.min(tx, ty);
+      const ex = nx - ux * t;
+      const ey = ny - uy * t;
+
+      html += `
+        <path class="connector-line l${i+1}" d="M ${sx} ${sy} L ${ex} ${ey}" />
+        <circle class="connector-pulse p${i+1}" r="2.5" style="offset-path: path('M ${sx} ${sy} L ${ex} ${ey}');" />
+      `;
     });
+    svg.innerHTML = html;
+  }
 
-    // Contact form
-    const form = document.getElementById('contact-form');
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn = form.querySelector('.form-submit');
-        btn.textContent = 'Sending...';
-        btn.disabled = true;
-        try {
-          const res = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-          });
-          if (res.ok) {
-            form.reset();
-            document.getElementById('form-success').style.display = 'block';
-            btn.textContent = '✓ Sent';
-          } else {
-            btn.textContent = 'Error — try again';
-            btn.disabled = false;
-          }
-        } catch {
-          btn.textContent = 'Error — try again';
-          btn.disabled = false;
-        }
-      });
-    }
-  </script>
+  requestAnimationFrame(() => setTimeout(drawConnectors, 50));
+  window.addEventListener('resize', drawConnectors);
+</script>
+
 </body>
 </html>

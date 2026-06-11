@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Hand — Ramy Wahib</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1c1c1c;
+    --bg-soft: #242424;
+    --fg: #e8edf2;
+    --fg-dim: #7c828a;
+    --fg-dimmer: #3d4148;
+    --rust: #f97316;
+    --rust-bright: #fb923c;
+    --rust-soft: rgba(249, 115, 22, 0.12);
+    --rust-glow: rgba(249, 115, 22, 0.4);
+    --line: rgba(220, 235, 245, 0.08);
+    --card: rgba(28, 28, 28, 0.8);
+    --border-card: rgba(220, 235, 245, 0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 10% 15%, rgba(249, 115, 22, 0.08), transparent 50%),
+      radial-gradient(ellipse at 90% 85%, rgba(249, 115, 22, 0.05), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--rust); }
+
+  .corner {
+    position: fixed;
+    width: 20px; height: 20px;
+    border-color: var(--fg-dimmer);
+    z-index: 3;
+  }
+  .corner.tl { top: 16px; left: 16px; border-top: 1px solid; border-left: 1px solid; }
+  .corner.tr { top: 16px; right: 16px; border-top: 1px solid; border-right: 1px solid; }
+  .corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid; border-left: 1px solid; }
+  .corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid; border-right: 1px solid; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-dim);
+    letter-spacing: 0.05em;
+    background: rgba(28, 28, 28, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  nav .system-id { display: flex; align-items: center; gap: 10px; }
+  nav .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--rust); box-shadow: 0 0 12px var(--rust-glow);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  nav a.back { color: var(--fg-dim); text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s; }
+  nav a.back:hover { color: var(--rust-bright); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 140px 64px 80px;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; right: -1rem;
+    transform: translateY(-50%);
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(8rem, 22vw, 24rem);
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.02);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+  }
+  .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--rust-bright); }
+
+  .hero h1 {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(4rem, 12vw, 11rem);
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .hero h1 .accent { color: var(--rust-bright); text-shadow: 0 0 40px var(--rust-glow); }
+
+  .hero-meta {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    position: relative;
+  }
+
+  .meta-item {
+    padding: 20px 32px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .meta-val { font-size: 14px; color: var(--fg); font-weight: 500; }
+
+  /* ── SECTIONS ── */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 72px 64px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  /* ── OVERVIEW ── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .overview-text p {
+    font-size: 15px;
+    color: var(--fg-dim);
+    line-height: 1.85;
+    margin-bottom: 14px;
+    font-weight: 400;
+  }
+  .overview-text p:last-child { margin-bottom: 0; }
+
+  .overview-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .stat-cell {
+    background: var(--card);
+    padding: 22px;
+  }
+
+  .stat-num {
+    font-family: 'Russo One', sans-serif;
+    font-size: 26px;
+    color: var(--rust-bright);
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+    text-shadow: 0 0 20px var(--rust-glow);
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-dimmer);
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist {
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .phase-divider {
+    padding: 10px 24px;
+    background: rgba(232, 150, 106, 0.06);
+    border-bottom: 1px solid var(--line);
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.2s;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item:hover { background: rgba(255,255,255,0.015); }
+
+  .check-box {
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+    border: 1px solid var(--fg-dimmer);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .check-item.done .check-box {
+    border-color: var(--rust-bright);
+    background: var(--rust-soft);
+  }
+
+  .check-box-tick {
+    font-size: 10px;
+    color: var(--rust-bright);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .check-item.done .check-box-tick { opacity: 1; }
+
+  .check-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg);
+    flex: 1;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+
+  .check-item.done .check-text {
+    color: var(--fg-dimmer);
+    text-decoration: line-through;
+    text-decoration-color: var(--fg-dimmer);
+  }
+
+  .check-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--line);
+    color: var(--fg-dimmer);
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .check-item.done .check-tag {
+    border-color: rgba(249, 115, 22, 0.3);
+    color: var(--rust-bright);
+    background: var(--rust-soft);
+  }
+
+  .checklist-note {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-dimmer);
+    margin-top: 12px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .skill-card {
+    border: 1px solid var(--line);
+    background: var(--card);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.3s;
+  }
+  .skill-card:hover { border-color: rgba(232, 150, 106, 0.25); }
+
+  .skill-icon {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust-bright);
+    margin-bottom: 4px;
+  }
+
+  .skill-name {
+    font-family: 'Russo One', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .skill-desc {
+    font-size: 13px;
+    color: var(--fg-dim);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border: 1px solid rgba(232, 150, 106, 0.2);
+    color: var(--rust);
+    background: rgba(232, 150, 106, 0.06);
+  }
+
+  /* ── SLIDER ── */
+  .slider { position: relative; overflow: hidden; border: 1px solid var(--line); background: var(--bg-soft); }
+  .slider-track { display: flex; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+  .slide { flex: 0 0 100%; position: relative; min-width: 0; }
+  .slide img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .slide video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+  .slide-placeholder { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; opacity: 0.3; border: 1px dashed var(--fg-dimmer); }
+  .slide-placeholder p { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--fg-dimmer); letter-spacing: 0.12em; text-transform: uppercase; text-align: center; padding: 0 2rem; }
+  .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px; background: linear-gradient(to top, rgba(28,28,28,0.92), rgba(28,28,28,0.4) 70%, transparent); font-family: 'Space Mono', monospace; font-size: 10px; color: var(--fg); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .slide:hover .slide-caption { opacity: 1; }
+  .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; background: rgba(28,28,28,0.75); border: 1px solid var(--line); color: var(--fg-dim); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, color 0.2s, background 0.2s; z-index: 2; backdrop-filter: blur(4px); }
+  .slider-btn:hover { border-color: var(--rust-bright); color: var(--rust-bright); background: rgba(28,28,28,0.95); }
+  .slider-btn--prev { left: 16px; }
+  .slider-btn--next { right: 16px; }
+  .slider-counter { position: absolute; bottom: 14px; right: 16px; font-family: 'Space Mono', monospace; font-size: 9px; color: var(--fg-dimmer); letter-spacing: 0.15em; background: rgba(28,28,28,0.7); padding: 3px 8px; z-index: 2; backdrop-filter: blur(4px); }
+  .slider[data-single] .slider-btn { display: none; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.96);
+    align-items: center; justify-content: center; padding: 2rem;
+    backdrop-filter: blur(4px);
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 88vh; object-fit: contain; border: 1px solid var(--line); }
+  .lightbox-close {
+    position: absolute; top: 24px; right: 32px;
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    color: var(--fg-dim); cursor: pointer; letter-spacing: 0.1em;
+    text-transform: uppercase; transition: color 0.2s;
+    background: none; border: none;
+  }
+  .lightbox-close:hover { color: var(--rust-bright); }
+
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 20px 32px 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-dimmer);
+    letter-spacing: 0.08em;
+  }
+  footer .blink { animation: blink 1.2s steps(2) infinite; color: var(--rust-bright); }
+  @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+  .reveal { transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.pre { opacity: 0; transform: translateY(18px); }
+  .reveal.on { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .hero { padding: 120px 24px 60px; }
+    .section { padding: 56px 24px; }
+    .overview-grid { grid-template-columns: 1fr; gap: 32px; }
+    .gallery { grid-template-columns: 1fr; }
+    .gallery-item.wide { grid-column: span 1; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .hero-bg-text { display: none; }
+    .meta-item { padding: 16px 20px; }
+  }
+
+  @media (max-width: 600px) {
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<nav>
+  <div class="system-id">
+    <span class="dot"></span>
+    <span>RW.SYS // THE HAND</span>
+  </div>
+  <a href="../projects.html" class="back">← PROJECTS</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-text">HAND</div>
+  <div class="hero-eyebrow">Personal Project — 2026 · In Progress</div>
+  <h1>THE <span class="accent">HAND</span></h1>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="meta-label">Status</div>
+      <div class="meta-val">In Progress</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Year</div>
+      <div class="meta-val">2026</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Type</div>
+      <div class="meta-val">Mechanical · Electrical · Software</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Stack</div>
+      <div class="meta-val">ROS2 · YOLOv8 · Whisper · SolidWorks · Altium · ESP32</div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 — OVERVIEW -->
+<div class="section">
+  <div class="section-label">// 01 — What It Is</div>
+  <div class="overview-grid">
+    <div class="overview-text reveal">
+      <p>The Hand is an autonomous 6DOF robotic arm that lets people with motor disabilities play physical chess through voice control and computer vision — fully hands-free.</p>
+      <p>Many people living with conditions like ALS, muscular dystrophy, or severe arthritis love chess but physically can't manipulate the pieces. Existing solutions push them to digital-only play, removing the social experience of sitting across a real board from another person. The Hand bridges that gap — a voice command triggers the arm to pick up and move the correct piece on a real board, while YOLOv8 tracks the full board state in real time.</p>
+      <p>Built from scratch across mechanical design, PCB design, embedded firmware, computer vision, voice recognition, and ROS2 motion planning.</p>
+    </div>
+    <div class="overview-stat-grid reveal">
+      <div class="stat-cell">
+        <span class="stat-num">6DOF</span>
+        <span class="stat-label">Robotic Arm</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">YOLOv8</span>
+        <span class="stat-label">Vision Model</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">ESP32</span>
+        <span class="stat-label">MCU</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">Whisper</span>
+        <span class="stat-label">Voice Input</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 — GALLERY -->
+<div class="section">
+  <div class="section-label">// 02 — Gallery</div>
+
+  <!--
+    HOW TO ADD MEDIA — add a new <div class="slide"> inside .slider-track:
+
+    Photo:
+    <div class="slide">
+      <img src="../media/your-photo.jpg" alt="Description">
+      <div class="slide-caption">Brief caption here</div>
+    </div>
+
+    Video:
+    <div class="slide">
+      <video controls><source src="../media/your-video.mp4" type="video/mp4"></video>
+      <div class="slide-caption">Brief caption here</div>
+    </div>
+
+    The counter and arrows update automatically. No other changes needed.
+  -->
+
+  <div class="slider reveal">
+    <div class="slider-track">
+      <div class="slide">
+      <img src="../media/YOLO.webp" alt="Custom trained chess detection CV model">
+      <div class="slide-caption">Custom trained YOLOv8 chess detection model</div>
+    </div>
+    <div class="slide">
+      <video controls><source src="../media/RVIZ-DUMMY.webm" type="video/webm"></video>
+      <div class="slide-caption">Motion Planning (Inverse Kinematics) in Rviz2 with 6DOF robotic arm</div>
+    </div>
+    </div>
+    <button class="slider-btn slider-btn--prev" aria-label="Previous">←</button>
+    <button class="slider-btn slider-btn--next" aria-label="Next">→</button>
+    <div class="slider-counter">01 / 01</div>
+  </div>
+</div>
+
+<!-- 03 — BUILD CHECKLIST -->
+<div class="section">
+  <div class="section-label">// 03 — Build Checklist</div>
+
+  <div class="checklist reveal">
+
+    <div class="phase-divider">// Phase 1 — Robot Modeling</div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Generate xacro file — 6 links, 6 joints, joint limits, inertia values</span><span class="check-tag">Design</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Add camera link to end-effector with Gazebo Harmonic sensor plugin</span><span class="check-tag">Design</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Load and verify all 6 DOFs in Gazebo Harmonic</span><span class="check-tag">Software</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Visualise TF frames and joint states in RViz2</span><span class="check-tag">Software</span></div>
+
+    <div class="phase-divider">// Phase 2 — Arm Control + IK</div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Set up MoveIt 2 — run setup assistant, generate SRDF and controller configs</span><span class="check-tag">Software</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Test IK in RViz2 — drag end-effector to arbitrary poses</span><span class="check-tag">Software</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Write Python MoveIt client using MoveItPy API</span><span class="check-tag">Software</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Test hardcoded pick-and-place motion in simulation</span><span class="check-tag">Software</span></div>
+
+    <div class="phase-divider">// Phase 3 — Vision (YOLOv8)</div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Source a pre-labelled chess piece dataset from Roboflow Universe</span><span class="check-tag">Vision</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Fine-tune YOLOv8n on dataset — achieved mAP50 of 0.982 across all 6 piece types</span><span class="check-tag">Vision</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Validate model on real camera feed — verify live piece detection</span><span class="check-tag">Vision</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Design overhead camera stand in SolidWorks — gantry style, sleeve joints, cable channel</span><span class="check-tag">Design</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">3D print and assemble camera stand — M4 bolted joints, locating lip for board alignment</span><span class="check-tag">Hardware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Map piece detections to board squares (a1–h8) using homography</span><span class="check-tag">Vision</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Wrap YOLO board state tracker as a ROS 2 node publishing to /board_state</span><span class="check-tag">Software</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Test board detection on simulated camera feed in Gazebo</span><span class="check-tag">Vision</span></div>
+
+    <div class="phase-divider">// Phase 4 — Voice Control</div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Integrate OpenAI Whisper for real-time speech-to-text</span><span class="check-tag">Voice</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Parse spoken move (e.g. "e2 to e4") into source and destination squares</span><span class="check-tag">Voice</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Validate move legality against current board state from YOLO</span><span class="check-tag">Software</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Wrap voice pipeline as a ROS2 node publishing to /chess_move</span><span class="check-tag">Software</span></div>
+
+    <div class="phase-divider">// Phase 5 — Full Simulation Integration</div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Compute hand-eye calibration — camera frame to robot base frame</span><span class="check-tag">Software</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Map chess board square coordinates to robot workspace coordinates</span><span class="check-tag">Software</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Build voice → vision → planning bridge node</span><span class="check-tag">Software</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Implement full control loop — hear move, locate piece, pick, place, confirm</span><span class="check-tag">Software</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Tune and stress-test in simulation — varied moves, captures, edge squares</span><span class="check-tag">Software</span></div>
+
+    <div class="phase-divider">// Phase 6 — Physical Build</div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Design full 6DOF arm CAD in SolidWorks using xacro dimensions as reference</span><span class="check-tag">Design</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Source components — servos, ESP32, Raspberry Pi 4, camera, PSU</span><span class="check-tag">Hardware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Breadboard prototype — verify ESP32 ↔ Pi UART comms and servo response</span><span class="check-tag">Hardware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">3D print all arm links and assemble</span><span class="check-tag">Hardware</span></div>
+
+    <div class="phase-divider">// Phase 6b — Firmware</div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Set up micro-ROS on ESP32 — agent, transport layer, build system</span><span class="check-tag">Firmware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Write PWM control firmware using ESP32 LEDC hardware timer API</span><span class="check-tag">Firmware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Subscribe to /joint_commands and drive all 6 servo outputs</span><span class="check-tag">Firmware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Validate firmware end-to-end — Pi publishes, ESP32 moves servos correctly</span><span class="check-tag">Firmware</span></div>
+
+    <div class="phase-divider">// Phase 7 — PCB Design & Fabrication</div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Design schematic in Altium — ESP32, PCA9685, servo headers, UART, power input</span><span class="check-tag">Hardware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Route 2-layer PCB layout — wide servo power traces, separated ground planes</span><span class="check-tag">Hardware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Run DRC, review Gerbers, export Excellon drill file for JLCPCB</span><span class="check-tag">Hardware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Order boards from JLCPCB, solder components, bring-up test</span><span class="check-tag">Hardware</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Swap breadboard prototype for finished PCB, re-run servo tests</span><span class="check-tag">Hardware</span></div>
+
+    <div class="phase-divider">// Phase 8 — Real-World Deployment</div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Install ROS2 Jazzy on Raspberry Pi, transfer and verify all packages</span><span class="check-tag">Software</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Real hand-eye calibration using checkerboard + easy_handeye2</span><span class="check-tag">Software</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Retune YOLO under real lighting and board setup conditions</span><span class="check-tag">Vision</span></div>
+    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">End-to-end real-world test — speak a move, arm executes it on a real board</span><span class="check-tag">Deployment</span></div>
+
+  </div>
+  <p class="checklist-note">Progress updated by Ramy</p>
+</div>
+
+<!-- 04 — SKILLS -->
+<div class="section">
+  <div class="section-label">// 04 — What I'm Building / Learning</div>
+  <div class="skills-grid reveal">
+
+    <div class="skill-card">
+      <div class="skill-icon">// Mechanical Design</div>
+      <div class="skill-name">CAD & 3D Printing</div>
+      <p class="skill-desc">Designing a full 6DOF arm in SolidWorks with manufacturable joints, linkages, and mounting points — then printing and iterating on real hardware.</p>
+      <div class="tags"><span class="tag">SolidWorks</span><span class="tag">3D Printing</span><span class="tag">DFM</span></div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">// Electrical Design</div>
+      <div class="skill-name">PCB Design</div>
+      <p class="skill-desc">Custom PCB in Altium Designer to power and control the arm's actuators, handle signal routing, and interface with the ESP32 microcontroller.</p>
+      <div class="tags"><span class="tag">Altium</span><span class="tag">Schematics</span><span class="tag">PCB Layout</span></div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">// Software</div>
+      <div class="skill-name">ROS2 & MoveIt</div>
+      <p class="skill-desc">Full ROS2 stack from URDF modelling to MoveIt motion planning, running inverse kinematics for real-time arm control driven by voice and vision inputs.</p>
+      <div class="tags"><span class="tag">ROS2</span><span class="tag">MoveIt</span><span class="tag">Gazebo</span><span class="tag">URDF</span></div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">// Firmware</div>
+      <div class="skill-name">Embedded Firmware</div>
+      <p class="skill-desc">micro-ROS firmware on ESP32 — subscribing to ROS2 joint commands, driving servo PWM via hardware timers, communicating with Raspberry Pi over UART.</p>
+      <div class="tags"><span class="tag">ESP32</span><span class="tag">micro-ROS</span><span class="tag">C++</span><span class="tag">PWM</span></div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">// Computer Vision</div>
+      <div class="skill-name">Object Detection</div>
+      <p class="skill-desc">Fine-tuned YOLOv8 model detecting chess pieces and tracking full board state in real time, mapping piece positions to robot workspace coordinates.</p>
+      <div class="tags"><span class="tag">YOLOv8</span><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Roboflow</span></div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">// Voice + Integration</div>
+      <div class="skill-name">Voice Control Pipeline</div>
+      <p class="skill-desc">OpenAI Whisper for real-time speech recognition, parsing spoken chess moves into board coordinates, tying voice, vision, and motion planning into one system.</p>
+      <div class="tags"><span class="tag">Whisper</span><span class="tag">NLP</span><span class="tag">ROS2</span><span class="tag">Integration</span></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer>© 2026 · RAMYWAHIB.COM · READY<span class="blink">_</span></footer>
+
+<script>
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-img').src = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  document.querySelectorAll('.slider').forEach(function(slider) {
+    var track = slider.querySelector('.slider-track');
+    var slides = Array.from(track.querySelectorAll('.slide'));
+    var counter = slider.querySelector('.slider-counter');
+    if (slides.length <= 1) slider.setAttribute('data-single', '');
+    var cur = 0;
+    function go(dir) {
+      cur = (cur + dir + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      if (counter) counter.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    }
+    slider.querySelector('.slider-btn--prev').addEventListener('click', function() { go(-1); });
+    slider.querySelector('.slider-btn--next').addEventListener('click', function() { go(1); });
+  });
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('on'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('pre');
+    obs.observe(el);
+  });
+</script>
+
+</body>
+</html>
