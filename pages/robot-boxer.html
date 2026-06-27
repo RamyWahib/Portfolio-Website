@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<script defer src="https://cloud.umami.is/script.js" data-website-id="d9bdbd8f-390d-4e4a-8cba-50ab9d0518ea"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Robot Boxer — Ramy Wahib</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1c1c1c;
+    --bg-soft: #242424;
+    --fg: #e8edf2;
+    --fg-dim: #7c828a;
+    --fg-dimmer: #3d4148;
+    --rust: #f97316;
+    --rust-bright: #fb923c;
+    --rust-soft: rgba(249, 115, 22, 0.12);
+    --rust-glow: rgba(249, 115, 22, 0.4);
+    --line: rgba(220, 235, 245, 0.08);
+    --card: rgba(28, 28, 28, 0.8);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { background: var(--bg); color: var(--fg); font-family: 'Rajdhani', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at 10% 15%, rgba(249, 115, 22, 0.07), transparent 50%),
+                radial-gradient(ellipse at 90% 85%, rgba(249, 115, 22, 0.04), transparent 50%);
+    pointer-events: none; z-index: 0;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--rust); }
+
+  .corner { position: fixed; width: 20px; height: 20px; border-color: var(--fg-dimmer); z-index: 3; }
+  .corner.tl { top: 16px; left: 16px; border-top: 1px solid; border-left: 1px solid; }
+  .corner.tr { top: 16px; right: 16px; border-top: 1px solid; border-right: 1px solid; }
+  .corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid; border-left: 1px solid; }
+  .corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid; border-right: 1px solid; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 22px 32px; display: flex; justify-content: space-between; align-items: center;
+    z-index: 10; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--fg-dim);
+    letter-spacing: 0.05em; background: rgba(28, 28, 28, 0.88); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .system-id { display: flex; align-items: center; gap: 10px; }
+  nav .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rust); box-shadow: 0 0 12px var(--rust-glow); animation: pulse 2s ease-in-out infinite; }
+  nav a.back { color: var(--fg-dim); text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s; }
+  nav a.back:hover { color: var(--rust-bright); }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.85); } }
+
+  .hero {
+    position: relative; z-index: 1;
+    padding: 140px 64px 80px;
+    border-bottom: 1px solid var(--line); overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute; top: 50%; right: -1rem; transform: translateY(-50%);
+    font-family: 'Russo One', sans-serif; font-size: clamp(8rem, 22vw, 24rem);
+    text-transform: uppercase; color: rgba(255,255,255,0.02);
+    pointer-events: none; user-select: none; line-height: 1; letter-spacing: -0.02em;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--rust-bright); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px; position: relative;
+  }
+  .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--rust-bright); }
+
+  .hero h1 {
+    font-family: 'Russo One', sans-serif; font-size: clamp(4rem, 12vw, 11rem);
+    text-transform: uppercase; line-height: 0.9; letter-spacing: -0.02em; margin-bottom: 48px; position: relative;
+  }
+  .hero h1 .accent { color: var(--rust-bright); text-shadow: 0 0 40px var(--rust-glow); }
+
+  .hero-meta { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--line); border-left: 1px solid var(--line); position: relative; }
+  .meta-item { padding: 20px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .meta-label { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--fg-dimmer); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 5px; }
+  .meta-val { font-size: 14px; color: var(--fg); font-weight: 500; }
+
+  .section { position: relative; z-index: 1; padding: 72px 64px; border-bottom: 1px solid var(--line); }
+  .section-label {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--rust-bright); margin-bottom: 40px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  .overview-text p { font-size: 15px; color: var(--fg-dim); line-height: 1.85; margin-bottom: 14px; }
+  .overview-text p:last-child { margin-bottom: 0; }
+
+  /* ── SLIDER ── */
+  .slider { position: relative; overflow: hidden; border: 1px solid var(--line); background: var(--bg-soft); }
+  .slider-track { display: flex; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+  .slide { flex: 0 0 100%; position: relative; min-width: 0; }
+  .slide img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .slide video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+  .slide-placeholder { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; opacity: 0.3; border: 1px dashed var(--fg-dimmer); }
+  .slide-placeholder p { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--fg-dimmer); letter-spacing: 0.12em; text-transform: uppercase; text-align: center; padding: 0 2rem; }
+  .slide-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px; background: linear-gradient(to top, rgba(28,28,28,0.92), rgba(28,28,28,0.4) 70%, transparent); font-family: 'Space Mono', monospace; font-size: 10px; color: var(--fg); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .slide:hover .slide-caption { opacity: 1; }
+  .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; background: rgba(28,28,28,0.75); border: 1px solid var(--line); color: var(--fg-dim); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, color 0.2s, background 0.2s; z-index: 2; backdrop-filter: blur(4px); }
+  .slider-btn:hover { border-color: var(--rust-bright); color: var(--rust-bright); background: rgba(28,28,28,0.95); }
+  .slider-btn--prev { left: 16px; }
+  .slider-btn--next { right: 16px; }
+  .slider-counter { position: absolute; bottom: 14px; right: 16px; font-family: 'Space Mono', monospace; font-size: 9px; color: var(--fg-dimmer); letter-spacing: 0.15em; background: rgba(28,28,28,0.7); padding: 3px 8px; z-index: 2; backdrop-filter: blur(4px); }
+  .slider[data-single] .slider-btn { display: none; }
+
+  .tech-item { margin-bottom: 28px; }
+  .tech-item:last-child { margin-bottom: 0; }
+  .tech-heading { font-family: 'Russo One', sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--fg); margin-bottom: 8px; }
+  .tech-item p { font-size: 14px; color: var(--fg-dim); line-height: 1.75; }
+
+  .challenge-item { border-left: 2px solid var(--rust-bright); padding-left: 20px; margin-bottom: 24px; }
+  .challenge-item:last-child { margin-bottom: 0; }
+  .challenge-heading { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust-bright); margin-bottom: 6px; }
+  .challenge-item p { font-size: 14px; color: var(--fg-dim); line-height: 1.75; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border: 1px solid rgba(249, 115, 22, 0.2); color: var(--rust); background: rgba(249, 115, 22, 0.06); }
+
+  .links-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 40px; }
+  .link-btn { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 22px; text-decoration: none; transition: opacity 0.2s; }
+  .link-btn.primary { background: var(--rust-bright); color: #1c1c1c; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); }
+  .link-btn.outline { border: 1px solid var(--line); color: var(--fg-dim); }
+  .link-btn:hover { opacity: 0.75; }
+
+  .lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.96); align-items: center; justify-content: center; padding: 2rem; backdrop-filter: blur(4px); }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 88vh; object-fit: contain; border: 1px solid var(--line); }
+  .lightbox-close { position: absolute; top: 24px; right: 32px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--fg-dim); cursor: pointer; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; background: none; border: none; }
+  .lightbox-close:hover { color: var(--rust-bright); }
+
+  footer { position: relative; z-index: 1; text-align: center; padding: 20px 32px 40px; font-family: 'Space Mono', monospace; font-size: 10px; color: var(--fg-dimmer); letter-spacing: 0.08em; }
+  footer .blink { animation: blink 1.2s steps(2) infinite; color: var(--rust-bright); }
+  @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+  .reveal { transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.pre { opacity: 0; transform: translateY(18px); }
+  .reveal.on { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .hero { padding: 120px 24px 60px; }
+    .section { padding: 56px 24px; }
+    .gallery { grid-template-columns: 1fr; }
+    .gallery-item.wide { grid-column: span 1; }
+    .hero-bg-text { display: none; }
+    .meta-item { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<nav>
+  <div class="system-id">
+    <span class="dot"></span>
+    <span>RW.SYS // ROBOT BOXER</span>
+  </div>
+  <a href="../projects.html" class="back">← PROJECTS</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg-text">BOXER</div>
+  <div class="hero-eyebrow">Humanoid Reinforcement Learning — June 2026</div>
+  <h1>ROBOT <span class="accent">BOXER</span></h1>
+  <div class="hero-meta">
+    <div class="meta-item"><div class="meta-label">Number</div><div class="meta-val">// 002</div></div>
+    <div class="meta-item"><div class="meta-label">Date</div><div class="meta-val">June 2026</div></div>
+    <div class="meta-item"><div class="meta-label">Type</div><div class="meta-val">Humanoid Reinforcement Learning</div></div>
+    <div class="meta-item"><div class="meta-label">Stack</div><div class="meta-val">Python · IsaacLab · PyTorch · RSL-RL</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">// 01 — Overview</div>
+  <div class="overview-text reveal">
+    <p>Trained a Unitree G1 humanoid (29-DOF) in IsaacLab/Isaac Sim to throw a punch at a target sphere placed in front of it, comparing two competing control strategies: a pure-PPO policy trained from reward shaping alone, and an AMP (Adversarial Motion Priors) policy regularized against motion-capture punching reference data via a learned discriminator.</p>
+    <p>Built a custom command term that samples a punch target in the robot's base frame, converts it to world space relative to the robot's live pose, tracks timing windows for when a punch is expected to land, and scores hits using a position + velocity-projection check. Both policies were trained for 10k iterations, then resumed and extended by another 30k each, and evaluated head-to-head in the simulator.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">// 02 — Media</div>
+  <div class="slider reveal">
+    <div class="slider-track">
+      <div class="slide">
+        <video controls>
+          <source src="../media/amp_train.webm" type="video/webm">
+        </video>
+        <div class="slide-caption">AMP-regularized policy punching the target sphere</div>
+      </div>
+      <div class="slide">
+        <video controls>
+          <source src="../media/pure_rl.webm" type="video/webm">
+        </video>
+        <div class="slide-caption">Pure-PPO baseline policy punching the target sphere</div>
+      </div>
+    </div>
+    <button class="slider-btn slider-btn--prev" aria-label="Previous">←</button>
+    <button class="slider-btn slider-btn--next" aria-label="Next">→</button>
+    <div class="slider-counter">01 / 02</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">// 03 — Technical Details</div>
+  <div class="reveal">
+    <div class="tech-item">
+      <div class="tech-heading">Punch Command System</div>
+      <p>A custom IsaacLab <code>CommandTerm</code> samples a target offset in the robot's base frame (forward/lateral/height ranges), then recomputes the world-frame target every step from the robot's current root pose and orientation — so the target always tracks correctly relative to the robot rather than going stale after a reset.</p>
+    </div>
+    <div class="tech-item">
+      <div class="tech-heading">Hit Detection &amp; Timing</div>
+      <p>The command tracks a punch-action time window and an expected-hit time window per episode. A hit is registered when the hand's distance to the target drops below a threshold while its velocity is projected toward the target above a minimum speed — separating "on-time" hits from incidental contact.</p>
+    </div>
+    <div class="tech-item">
+      <div class="tech-heading">Reward Design</div>
+      <p>Combines distance-to-target, hand-velocity, on-time-hit, and post-hit stability rewards with a punch-efficiency penalty that penalizes hand speed outside the action window — discouraging the policy from flailing the arm for free reward between punches.</p>
+    </div>
+    <div class="tech-item">
+      <div class="tech-heading">AMP Discriminator</div>
+      <p>The AMP policy is additionally regularized by a learned discriminator trained against motion-capture punching clips, blending task reward with a style reward via the RSL-RL AMP runner, so the resulting motion looks more natural than the PPO baseline's reward-only solution.</p>
+    </div>
+    <div class="tech-item">
+      <div class="tech-heading">Target Visualization</div>
+      <p>The punch target is rendered as a red sphere using IsaacLab's <code>VisualizationMarkers</code> — a purely visual, physics-independent marker — after an initial attempt using a kinematic <code>RigidObject</code> proved unreliable for per-step position updates inside PhysX.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">// 04 — Challenges &amp; Learnings</div>
+  <div class="reveal">
+    <div class="challenge-item">
+      <div class="challenge-heading">The Silent Indexing Bug</div>
+      <p>The punch target appeared to spawn inside the robot no matter what coordinates were configured. Root cause: <code>tensor[env_ids, 0].uniform_(...)</code> with a tensor index returns a copy in PyTorch, not a view — so the in-place sample never actually wrote back to the target buffer, leaving it at zero. Fixed by sampling into a temporary tensor and assigning it back explicitly.</p>
+    </div>
+    <div class="challenge-item">
+      <div class="challenge-heading">Kinematic Bodies Don't Visualize Like You'd Expect</div>
+      <p>Tried moving a kinematic, collision-disabled sphere every step via <code>write_root_pose_to_sim</code> to use it as a visual marker — it never reliably tracked the target. Switched to IsaacLab's <code>VisualizationMarkers</code>, which updates the USD stage directly and sidesteps PhysX kinematic-body semantics entirely.</p>
+    </div>
+    <div class="challenge-item">
+      <div class="challenge-heading">Stale Cached Robot Pose</div>
+      <p>Computing the world-frame target once at episode reset used a robot pose that hadn't been refreshed yet after the reset event, baking in a wrong offset for the rest of the episode. Fixed by recomputing the world target from the robot's live pose every step instead of caching it.</p>
+    </div>
+    <div class="challenge-item">
+      <div class="challenge-heading">Pickled Configs Go Stale</div>
+      <p>The playback script loads a pickled copy of the training-time config rather than re-reading source files — so code and config fixes silently didn't apply when replaying old checkpoints. Learned to either force config overrides post-load or always pass <code>--task</code> to reload from source.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">// 05 — Tech Stack</div>
+  <div class="tags reveal">
+    <span class="tag">Python</span>
+    <span class="tag">IsaacLab</span>
+    <span class="tag">Isaac Sim</span>
+    <span class="tag">PyTorch</span>
+    <span class="tag">RSL-RL</span>
+    <span class="tag">PPO</span>
+    <span class="tag">AMP</span>
+    <span class="tag">PhysX</span>
+    <span class="tag">Unitree G1</span>
+  </div>
+  <div class="links-row reveal">
+    <a class="link-btn primary" href="https://github.com/RamyWahib/humanoid-boxing" target="_blank">View on GitHub ↗</a>
+    <a class="link-btn outline" href="../projects.html">← Back to Projects</a>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer>© 2026 · RAMYWAHIB.COM · READY<span class="blink">_</span></footer>
+
+<script>
+  function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').classList.add('open'); }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.getElementById('lightbox-img').src = ''; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  document.querySelectorAll('.slider').forEach(function(slider) {
+    var track = slider.querySelector('.slider-track');
+    var slides = Array.from(track.querySelectorAll('.slide'));
+    var counter = slider.querySelector('.slider-counter');
+    if (slides.length <= 1) slider.setAttribute('data-single', '');
+    var cur = 0;
+    function go(dir) {
+      cur = (cur + dir + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      if (counter) counter.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    }
+    slider.querySelector('.slider-btn--prev').addEventListener('click', function() { go(-1); });
+    slider.querySelector('.slider-btn--next').addEventListener('click', function() { go(1); });
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('on'), i * 80); obs.unobserve(e.target); } });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(el => { el.classList.add('pre'); obs.observe(el); });
+</script>
+</body>
+</html>
