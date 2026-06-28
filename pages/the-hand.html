@@ -580,17 +580,17 @@
     <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Source a pre-labelled chess piece dataset from Roboflow Universe</span><span class="check-tag">Vision</span></div>
     <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Fine-tune YOLOv8n on dataset — achieved mAP50 of 0.982 across all 6 piece types</span><span class="check-tag">Vision</span></div>
     <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Validate model on real camera feed — verify live piece detection</span><span class="check-tag">Vision</span></div>
-    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Design overhead camera stand in SolidWorks — gantry style, sleeve joints, cable channel</span><span class="check-tag">Design</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Design overhead camera stand in SolidWorks — gantry style, sleeve joints, cable channel</span><span class="check-tag">Design</span></div>
     <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">3D print and assemble camera stand — M4 bolted joints, locating lip for board alignment</span><span class="check-tag">Hardware</span></div>
     <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Map piece detections to board squares (a1–h8) using homography</span><span class="check-tag">Vision</span></div>
     <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Wrap YOLO board state tracker as a ROS 2 node publishing to /board_state</span><span class="check-tag">Software</span></div>
     <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Test board detection on simulated camera feed in Gazebo</span><span class="check-tag">Vision</span></div>
 
     <div class="phase-divider">// Phase 4 — Voice Control</div>
-    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Integrate OpenAI Whisper for real-time speech-to-text</span><span class="check-tag">Voice</span></div>
-    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Parse spoken move (e.g. "e2 to e4") into source and destination squares</span><span class="check-tag">Voice</span></div>
-    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Validate move legality against current board state from YOLO</span><span class="check-tag">Software</span></div>
-    <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Wrap voice pipeline as a ROS2 node publishing to /chess_move</span><span class="check-tag">Software</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Integrate OpenAI Whisper for real-time speech-to-text</span><span class="check-tag">Voice</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Parse spoken move (e.g. "e2 to e4") into source and destination squares</span><span class="check-tag">Voice</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Validate move legality against current board state from YOLO</span><span class="check-tag">Software</span></div>
+    <div class="check-item done"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Wrap voice pipeline as a ROS2 node publishing to /chess_move</span><span class="check-tag">Software</span></div>
 
     <div class="phase-divider">// Phase 5 — Full Simulation Integration</div>
     <div class="check-item"><div class="check-box"><span class="check-box-tick">✓</span></div><span class="check-text">Compute hand-eye calibration — camera frame to robot base frame</span><span class="check-tag">Software</span></div>
