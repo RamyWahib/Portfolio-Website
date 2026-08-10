@@ -177,6 +177,31 @@
     font-weight: 500;
   }
 
+  .docs-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 28px;
+    padding: 16px 32px;
+    background: var(--rust);
+    color: #05171a;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    box-shadow: 0 0 20px var(--rust-glow);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+
+  .docs-cta:hover {
+    background: var(--rust-bright);
+    box-shadow: 0 0 28px var(--rust-glow);
+    transform: translateY(-1px);
+  }
+
   .meta-val a { color: var(--rust-bright); text-decoration: none; }
   .meta-val a:hover { text-decoration: underline; }
 
@@ -201,128 +226,12 @@
   }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 
-  /* ── ROLE SECTION ── */
-  .role-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 48px;
-    align-items: start;
-  }
-
-  .role-overview p {
+  /* ── ABOUT SECTION ── */
+  .about-text p {
     font-size: 15px;
     color: var(--fg-dim);
     line-height: 1.85;
-    margin-bottom: 14px;
-  }
-  .role-overview p:last-child { margin-bottom: 0; }
-
-  .stat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    margin-top: 32px;
-  }
-
-  .stat-cell {
-    background: var(--card);
-    padding: 24px;
-  }
-
-  .stat-num {
-    font-family: 'Russo One', sans-serif;
-    font-size: 28px;
-    font-weight: 400;
-    color: var(--rust-bright);
-    line-height: 1;
-    display: block;
-    margin-bottom: 6px;
-    text-shadow: 0 0 20px var(--rust-glow);
-  }
-
-  .stat-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--fg-dimmer);
-  }
-
-  .role-block {
-    border: 1px solid var(--border-card);
-    background: var(--card);
-    backdrop-filter: blur(10px);
-  }
-
-  .role-header {
-    padding: 20px 28px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .role-title {
-    font-family: 'Russo One', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .role-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--rust-bright);
-    border: 1px solid rgba(103, 232, 249, 0.3);
-    padding: 3px 10px;
-    background: var(--rust-soft);
-  }
-
-  .role-body { padding: 28px; }
-
-  .responsibilities {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .responsibilities li {
-    font-size: 14px;
-    color: var(--fg-dim);
-    line-height: 1.65;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .responsibilities li::before {
-    content: '→';
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--rust-bright);
-    margin-top: 2px;
-    flex-shrink: 0;
-  }
-
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
-
-  .tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 4px 9px;
-    border: 1px solid rgba(34, 211, 238, 0.2);
-    color: var(--rust);
-    background: rgba(34, 211, 238, 0.06);
+    max-width: 680px;
   }
 
   /* ── SLIDER ── */
@@ -438,7 +347,6 @@
   @media (max-width: 900px) {
     .hero { padding: 120px 24px 60px; }
     .section { padding: 56px 24px; }
-    .role-grid { grid-template-columns: 1fr; gap: 32px; }
     .gallery { grid-template-columns: 1fr; }
     .gallery-item.wide { grid-column: span 1; }
     .tasks-grid { grid-template-columns: 1fr; }
@@ -485,61 +393,14 @@
       <div class="meta-val">C++ · ROS2 · STM32 · CAN Bus</div>
     </div>
   </div>
+  <a href="https://watonomous.github.io/humanoid-docs/index.html" target="_blank" rel="noopener" class="docs-cta">Visit the Project Documentation ↗</a>
 </div>
 
-<!-- 01 — ROLE -->
+<!-- 01 — ABOUT -->
 <div class="section">
-  <div class="section-label">// 01 — My Role</div>
-  <div class="role-grid">
-    <div class="role-overview reveal">
-      <p>WATonomous is the University of Waterloo's student autonomous robots design team. I joined in January 2026 as a Robotics Engineer, working on software, firmware, and hardware for a full humanoid robot.</p>
-      <p>My work spans the full stack — from low-level CAN bus firmware on STM32 microcontrollers, to ROS2 motion control nodes and joint state representation systems running on Linux. Beyond software and firmware, I also contribute to mechanical assembly and electrical wiring of the robot.</p>
-      <div class="stat-grid">
-        <div class="stat-cell">
-          <span class="stat-num">15+</span>
-          <span class="stat-label">DOF Humanoid</span>
-        </div>
-        <div class="stat-cell">
-          <span class="stat-num">CAN</span>
-          <span class="stat-label">Bus Protocol</span>
-        </div>
-        <div class="stat-cell">
-          <span class="stat-num">STM32</span>
-          <span class="stat-label">MCU Platform</span>
-        </div>
-        <div class="stat-cell">
-          <span class="stat-num">ROS2</span>
-          <span class="stat-label">Middleware</span>
-        </div>
-      </div>
-    </div>
-    <div class="reveal">
-      <div class="role-block">
-        <div class="role-header">
-          <div class="role-title">Robotics Engineer</div>
-          <div class="role-badge">● Active</div>
-        </div>
-        <div class="role-body">
-          <ul class="responsibilities">
-            <li>Developing CAN bus firmware for STM32 microcontrollers to interface with humanoid robot joints</li>
-            <li>Building joint state representation and feedback systems in ROS2 C++</li>
-            <li>Writing and testing motion control nodes for autonomous humanoid operation</li>
-            <li>Collaborating with hardware and electrical subteams on system integration</li>
-            <li>Designing, building, and testing the power distribution system for the humanoid</li>
-          </ul>
-          <div class="tags">
-            <span class="tag">C++</span>
-            <span class="tag">ROS2</span>
-            <span class="tag">STM32</span>
-            <span class="tag">CAN Bus</span>
-            <span class="tag">Embedded</span>
-            <span class="tag">Linux</span>
-            <span class="tag">Mechanical</span>
-            <span class="tag">Electrical</span>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="section-label">// 01 — About the Project</div>
+  <div class="about-text reveal">
+    <p>The WATonomous Humanoid team is building UWaterloo's first humanoid robot — a dual-arm platform combining mechanical design, electrical systems, and advanced software. The project spans the full engineering stack, from firmware and hardware interfacing to motion control and machine learning.</p>
   </div>
 </div>
 
@@ -571,6 +432,18 @@
       <div class="slide">
       <video controls><source src="../media/PCA.webm" type="video/mp4"></video>
       <div class="slide-caption">Compressed 15DOF hand to 7DOF using Geometric Fabrics and PCA in IsaacSim</div>
+    </div>
+     <div class="slide">
+      <img src="../media/arm-redesign.webp" alt="Description">
+      <div class="slide-caption">Full 7DOF Arm Redsigned with Solidworks and 3D printed</div>
+    </div>
+    <div class="slide">
+      <img src="../media/forearm.webp" alt="Description">
+      <div class="slide-caption">Full anthropomorphic tendon-driven forearm designed in Solidworks</div>
+    </div>
+     <div class="slide">
+      <video controls><source src="../media/arm-moving.webm" type="video/mp4"></video>
+      <div class="slide-caption">6DOF arm controls setup with CAN and ROS2</div>
     </div>
     </div>
     <button class="slider-btn slider-btn--prev" aria-label="Previous">←</button>
